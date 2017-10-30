@@ -49,7 +49,9 @@ data = {}
 debug = False
 addAll = True
 
-for j in range(0,20):
+thousandsOfRecordsToRead = 20
+
+for j in range(0,thousandsOfRecordsToRead):
     print "Begin Request:" + str(j)
     response = requests.get(longStr)
     
