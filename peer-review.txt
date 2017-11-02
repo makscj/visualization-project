@@ -1,0 +1,37 @@
+Peer Review Notes
+------------
+Reviewers: Edward Ekstrom, Andrew Tsai, and Farhan Nashrullah
+
+Interaction
+---
+Two levels of zoom: clicking on a subject can zoom to intersections of multiple subjects. Clicking on those subject
+intersections will take you to individual researchers.
+
+
+Stories
+---
+What are some possible stories?
+	See intersections of fields like computer science and biology
+	Different trends over time.
+	Time-lapse of how paper output of different universities has changed over the years.
+
+
+Suggestions
+---
+Goal is to find related proffesors and topics
+	when you do one search, you see all the iteractions a researcher has with other researchers
+	if you click another researcher in this view, switch the view to the other researcher
+	idea: custom hover menu to allow the user options for what clicking on a researcher does
+
+Regular expresions a possible way to search in the search bar for more advanced users.
+
+
+Limitations/Challenges
+---
+Researchers who have worked at multiple universities
+Researchers with identical names
+
+Critiques/Additions
+---
+Linked views to show stats on a university or a researcher
+Use WolframAlpha to get school data (when cleaning our data)
