@@ -1,10 +1,5 @@
 import requests
 from xml.etree import ElementTree
-# import xml.etree.cElementTree as ET
-# import urllib2
-# from xml.dom.minidom import parseString
-# import xml.dom
-# from lxml import etree
 import re
 import json
 import time
@@ -49,7 +44,9 @@ data = {}
 debug = False
 addAll = True
 
-for j in range(0,20):
+thousandsOfRecordsToRead = 20
+
+for j in range(0,thousandsOfRecordsToRead):
     print "Begin Request:" + str(j)
     response = requests.get(longStr)
     
