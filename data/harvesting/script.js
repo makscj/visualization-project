@@ -24,14 +24,36 @@ Set.prototype.difference = function(setB) {
     return difference;
 }
 
+divide = (a,b) => (0.0 + a.size)/(b.size)
+
 computeJaccard = function(set1, set2, stopwords){
     let intersect = set1.intersection(set2)
     let union = set1.union(set2)
 
-    intersect = intersect.difference(stopwords)
-    union = union.difference(stopwords)
+    let fJacc = (0.0 + intersect.size)/(union.size)
 
-    return (0.0 + intersect.size)/(union.size)
+    let intersectStop = intersect.difference(stopwords)
+    let unionStop = union.difference(stopwords)
+
+    
+    let prec = divide(intersectStop, unionStop)
+    let rec = divide(intersectStop, union)
+
+    
+    // console.log("Precision: " + prec)
+    // console.log("Recall: " + rec)
+    // console.log("F: " + (2*((prec*rec)/(prec + rec))))
+
+    // let sJacc = divide(intersect,union)
+
+
+    return (2*((prec*rec)/(prec + rec)))
+
+    // return (0.0 + intersect.size)/(union.size)
+}
+
+computeJaccardFromString = function(str1, str2, stopwords){
+    return computeJaccard(computeWordset(str1), computeWordset(str2), stopwords)
 }
 
 computeWordset = function(sentence, stopwords){
@@ -41,17 +63,23 @@ computeWordset = function(sentence, stopwords){
             token = token.toLowerCase();
             
             return token.length >= 2// && (stopwords.indexOf(token) == -1 || useWords);
-        }))
+        })
+        .map(
+            x => x.toLowerCase()
+                .replace(/(uni\b\.?|univ\b\.?|u\b\.?)/i, "university")
+                .replace(/(st\b\.?)/i, "saint")
+            )
+        )
 }
 
 
 d3.json("data.json", function(error, someData) {
     d3.json("data-all.json", function(error, allData){
-        console.log("All Data")
-        console.log(allData)
-        console.log("Some Data")
-        console.log(someData)
-        console.log("Filtered All Data")
+        // console.log("All Data")
+        // console.log(allData)
+        // console.log("Some Data")
+        // console.log(someData)
+        // console.log("Filtered All Data")
         console.log(allData.filter(x => x.authors[0].affiliation != null))
         // ----------------------
 
@@ -67,7 +95,6 @@ d3.json("data.json", function(error, someData) {
             /.*(Institute|Instituto) (of|de|for).*/, //catch a couple of insitutes
         ]
 
-        // console.log("Universit\xE9")
 
         testReg =  /^U [\w]+/ //Catches 
 
@@ -79,9 +106,7 @@ d3.json("data.json", function(error, someData) {
         for(record of someData){
             for(author of record.authors){
                 school = author.affiliation
-                if(testReg.test(school)){
-                    console.log(school)
-                }
+                
                 let count = 0
                 for(re of regExpressions){
                     if(re.test(school) && school != null){
@@ -115,9 +140,23 @@ d3.json("data.json", function(error, someData) {
         let clusters = []
 
         
-        let stopwordsWithoutUni = ["of", "the", "department", "physics", "math", "astronomy", "dipartimento", "astronomia", "universita", ".", ","]
-        let stopwords = ["university", "of", "the", "univ", "uni", "department", "physics", "math", "astronomy", "dipartimento", "astronomia", "universita", ".", ",", 
-    "graduate", "school", "science", "technology", "state"]
+        let stopwordsWithoutUni = ["of", "the", "department", "physics", "math", "astronomy", "dipartimento", "astronomia", "universita", ".", ",", "state"]
+        let stopwords = ["university", "of", "the", "univ", "univ.", "uni.", "uni", "department", "physics", "math", "astronomy", "dipartimento", "astronomia", "universita", ".", ",", 
+    "graduate", "school", "science", "technology", "college", "central", "eastern", "northern", "western", "southern"]
+
+
+        let tests = ["University of California", "Univ. California", "California Coast University", "California State University"]
+
+        for(t1 of tests){
+            for(t2 of tests){
+                if(t1 != t2){
+                    console.log(t1 + " : " + t2)// + " -> " + computeJaccardFromString(t1,t2,stopwords))
+                    computeJaccardFromString(t1, t2, stopwords)
+                    console.log("---------")
+                }
+            }
+        }
+
         for(school of matchedSchools){
             let cluster = {
                 name: school,
@@ -182,16 +221,19 @@ d3.json("data.json", function(error, someData) {
 
 
                     let similarity = computeJaccard(cluster.tokens, buckets, new Set(stopwords))
-                    let similarityNoStops = computeJaccard(cluster.tokens, buckets, new Set())
+                    let similarityNoStops = computeJaccard(cluster.tokens, buckets, new Set(stopwordsWithoutUni))
                     let similarityAcro = computeJaccard(cluster.tokens, acronymBuckets, new Set(stopwords))
+
+
+                    let threshold = 1.0/3.0
 
                     let pairSim = {
                         school: key,
-                        similarity: similarity >= 0.5 ? similarity : -1,
-                        acronymSimilarity: similarityAcro >= 0.5 ? similarityAcro : -1,
-                        noStopWordSimilarity: similarityNoStops >= 0.5 ? similarityNoStops : -1
+                        similarity: similarity >= threshold ? similarity : -1,
+                        acronymSimilarity: similarityAcro >= threshold ? similarityAcro : -1,
+                        noStopWordSimilarity: similarityNoStops >= threshold ? similarityNoStops : -1
                     }
-                    if(similarity >= 0.5 || similarityAcro >= 0.5)
+                    if(similarity >= threshold || similarityAcro >= threshold)
                         cluster.choices.push(pairSim)
                     // if(similarity >= 0.5 || similarityAcro > 0.5){
                     //     // console.log(key, similarity)
@@ -199,35 +241,21 @@ d3.json("data.json", function(error, someData) {
                     //     wasAdded = true
                     // }
                 }
-                // if(!wasAdded)
-                //     neverAdded.push(cluster.name)
+                if(!wasAdded)
+                    neverAdded.push(cluster.name)
             }
 
-            // console.log(uniMap)
 
-            // let countValid = 0
-            // for(let key of uniMap.keys()){
-            //     countValid += uniMap.get(key).valid.length
-            //     if(uniMap.get(key).valid.length > 0){
-            //         console.log(uniMap.get(key))
-                    
-            //     }
-            // }
-            // console.log(countValid)
-
-            // console.log(neverAdded)
 
 
             let bestChoices = clusters.filter(x => x.choices.length > 0)
             bestChoices.forEach(x => x.center = x.choices.reduce(function(l, e) {
-                return e.noStopWordSimilarity > l.noStopWordSimilarity ? e : l;
+                return e.similarity > l.similarity ? e : l;
               }).school)
             console.log(bestChoices)
         
         
         })
-
-
 
 
 
