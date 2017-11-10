@@ -57,7 +57,8 @@ d3.json("./data/spotify/top50.json", function (error, data) {
         .attr("cy", 0)
         .attr("r", r)
     */
-        .append('svg')
+        .append('g')
+        .attr('transform', 'translate(' + (svgWidth - starWidth) + ')')
         .attr('class', d => d.type)
         .attr('width', svgWidth / 3)
         .attr('height', hei)
@@ -75,9 +76,6 @@ d3.json("./data/spotify/top50.json", function (error, data) {
             }
             drawStarChart(svg, data)
         })
-        // WHY NO MOVE CORRECTLY???
-        .select('g')
-        .attr('transform', 'translate(' + (svgWidth - starWidth) + ')')
 
     let features = cells.filter(x => x.type == "features")
 
