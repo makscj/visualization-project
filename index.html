@@ -2,14 +2,19 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
-    <!-- <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="d3-star-plot-0.0.3.min.js"></script> -->
-    <!-- <script
-    src="https://code.jquery.com/jquery-2.2.4.js"
-    integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="
-    crossorigin="anonymous"></script> -->
-    <script type="text/javascript" src="./js/d3/d3.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <!-- <script src="d3-star-plot-0.0.3.min.js"></script> -->
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!-- <script type="text/javascript" src="./js/d3/d3.js"></script> -->
     <!-- <script type="text/javascript" src="bower_components/d3/d3.js"></script>
     <script type="text/javascript" src="bower_components/d3-tip/index.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.9.0/d3-legend.js"></script> -->
@@ -18,16 +23,49 @@
 </head>
 
 <body>
-<div id="canvas">
 
-</div>
+    <div id="wrapper">
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <a class="btn-primary" href="#">Home</a>
+                </li>
+                <li>
+                    <a href="#">Another link</a>
+                </li>
+                <li>
+                    <a href="#">Next link</a>
+                </li>
+                <li>
+                    <a href="#">Last link</a>
+                </li>
+            </ul>
+        </div>
+        <div id="page-content-wrapper">
+            <div class="page-content">
+                <div class="container">
+                    <div class="row">
+                        <div id="canvas">
 
-<div id="chart">
-    
-</div>
+                        </div>
+
+                        <div id="chart">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 
-<script type="text/javascript" src="script.js"></script>
+
+
+
+    <script type="text/javascript" src="script.js"></script>
+    <script type="text/javascript" src="js/circleChart.js"></script>
+    <script type="text/javascript" src="js/starChart.js"></script>
 </body>
+
 </html>
