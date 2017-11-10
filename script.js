@@ -1,97 +1,62 @@
-
-
-
-
 d3.json("./data/spotify/top50.json", function (error, data) {
     console.log(data)
 
-    let svg = d3.select("#canvas")//.append("svg");
+    let svg = d3.select("#canvas")
+    let bounds = svg.node().getBoundingClientRect()
+    svg = svg.append("svg")
+    let svgWidth = bounds.width
 
-    // svg.attr("width", 1000)
-    // svg.attr("height", 1000)
+    let numRows = 3
+    let hei = 25 * numRows 
+    let marg = 10
+    svg.attr("width", svgWidth)
+    svg.attr("height", hei * data.length)
 
-    let tbody = svg.append("table").append("tbody")
+    let tbody = svg.append("g")
+        .attr('transform', 'translate(0, ' + (hei / numRows) + ')')
 
-
-
-    let rows = tbody.selectAll("tr")
+    let i = 0
+    let rows = tbody.selectAll("svg>g>g")
         .data(data)
         .enter()
-        .append("tr");
+        .append("g")
+        .attr('transform', d => 'translate(0, ' + (i++ * (hei + marg)) + ')')
 
 
-    let cells = rows.selectAll("td")
+    let cells = rows.selectAll("g")
         .data(function (row) {
             return [
                 {type: "song", value: row.song },
-                {type: "arists", value: row.artists.join(", ") },
-                {type: "popularity", value: row.popularity/100.0 },
+                {type: "artists", value: row.artists.join(", ") },
+                {type: "popularity", value: 'Popularity: ' + row.popularity/100.0 },
                 {type: "features", value: row.features },
             ]
         })
-        .enter()
-        .append("td")
-        .html(function (d, i) {
-            if(d.type != "features")
-                return d.value
-        })
 
-        let features = cells.filter(x => x.type == "features");
+    let cent = cells.enter()
 
-        console.log(features)
+    cent.filter(d => d.type != 'features')
+        .append("text")
+        .attr('class', d => d.type)
+        .text(d => d.value)
 
-        features.append("svg")
-            .attr("height", 50)
-            .attr("width", 100)
-            .append("circle")
-            .attr("cx", 20)
-            .attr("cy", 20)
-            .attr("r", 5)
+    cent.select('.artists')
+        .attr('transform', 'translate(20, ' + (hei / numRows) + ')')
 
-    
-        
+    cent.select('.popularity')
+        .attr('transform', 'translate(20, ' + (hei / numRows * 2) + ')')
 
-        // if(d.type == "features"){
-        //     let chart = d3.select(this).append("svg")
+    let r = 5
+    cent.filter(d => d.type == 'features')
+    // put svg for star chart here
+        .append("circle")
+        .attr('class', d => d.type)
+        .attr("cx", svgWidth - r)
+        .attr("cy", 0)
+        .attr("r", r)
 
-        //     console.log(d.value)
-        //     let circle = chart.attr("width", 100)
-        //         .attr("height", 50)
-        //         .data([d.value])
-        //         .enter()
-        //         .append("circle")
-        //         .attr("cx", 20)
-        //         .attr("cy", 20)
-        //         .attr("r", 5)
+    let features = cells.filter(x => x.type == "features")
 
-        //     console.log(circle)
-
-        //     return circle
-        // }
-    //     var star = d3.starPlot()
-    //     .properties([
-    //       'Body',
-    //       'Sweetness',
-    //       'Smokey'
-    //     ])
-    //     .scales(scale)
-    //     .labels([
-    //       'Body',
-    //       'Sweetness',
-    //       'Smokey'
-    //     ])
-      
-    //   data.forEach(function(d) {
-    //     d3.select(body).append('svg')
-    //       .datum(d)
-    //       .call(star)
-    //   });
-
-
-
-
-
-
+    console.log(features)
+    console.log(features.data())
 })
-
-
