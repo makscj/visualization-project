@@ -47,10 +47,10 @@ function drawCircleChart(data) {
     let chartImage = chart.append('g')
         .attr("transform",
         "translate(" + (width - 3*buffer) + " ," +
-        (buffer/2) + ")")
+        (0) + ")")
         .append("image")
-        .attr("width", 2*buffer)
-        .attr("height", 2*buffer)
+        .attr("width", 3*buffer)
+        .attr("height", 3*buffer)
         .style("visibility", "hidden")
 
 
