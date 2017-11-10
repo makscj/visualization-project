@@ -37,7 +37,7 @@ d3.json("./data/spotify/top50-larger.json", function (error, data) {
     let cells = rows.selectAll("td")
         .data(function (row) {
             return [
-                { type: "image", value: row.images[2].url },
+                { type: "image", value: row.images[2].url, id:row.songId },
                 // { type: "id", value: row.songId },
                 { type: "song", value: row.song },
                 { type: "arists", value: row.artists.join(", ") },
@@ -61,6 +61,11 @@ d3.json("./data/spotify/top50-larger.json", function (error, data) {
             }
             if (d.type != "features")
                 return d.value
+        })
+        .on("click", function(d){
+            console.log("click")
+            if(d.type == "image")
+                loadSpotifyPlayer(d.id)
         })
 
  
