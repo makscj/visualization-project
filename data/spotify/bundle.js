@@ -1749,6 +1749,7 @@ let expiration = 0
 
 let tracks = []
 
+
 function download(text, name, type) {
     var a = document.createElement("a");
     var file = new Blob([text], {type: type});
@@ -1757,6 +1758,7 @@ function download(text, name, type) {
     a.click();
 }
 
+
 let getTopSongs = function (t) {
     s.setAccessToken(t)
     s.getUserPlaylists('Spotify')
@@ -1764,18 +1766,22 @@ let getTopSongs = function (t) {
             return data.items[0].id //Top 50
         })
         .then(function (playlistId) {
-            return s.getPlaylist('spotify', playlistId)
+            return s.getPlaylistTracks('spotify', playlistId)
         })
         .then(function (playlistData) {
-            console.log('User playlist', playlistData);
-            tracks =  playlistData.tracks.items.map(obj => {
+            console.log(playlistData);
+            tracks =  playlistData.items.map(obj => {
                 let track = obj.track;
                 return {
                     song: track.name,
                     album: track.album.name,
                     artists: track.artists.map(a => a.name),
                     songId: track.id,
-                    popularity: track.popularity
+                    popularity: track.popularity,
+                    href: track.href,
+                    markets: track.available_markets,
+                    explicit: track.explicit,
+                    images: track.album.images
                 } 
             })
             // console.log(tracks)
@@ -1798,7 +1804,7 @@ let getTopSongs = function (t) {
             return tracks
         })
         .then(function(tracks){
-            download(JSON.stringify(tracks), "test.txt", "text/plain")
+            download(JSON.stringify(tracks), "top50.json", "text/plain")
         })
         .catch(function (error) {
             console.log(error);
@@ -1810,7 +1816,7 @@ let getTopSongs = function (t) {
 let tokenIsSet = true
 
 if (tokenIsSet) {
-    token = "BQBMiUvHENYPgMZdU933afTb57aelewUZYayE3X8RGzVY-d5ABxUb6p05B481aD0wUYl5kXCT8wev6Eae3ic1A"
+    token = "BQAVf_A-TgMc7aHShZd44Gbl4-B2zWt1v8SiCcN4ih-JHHqN7HQ7KmJWT4N-cxS_9H7oAWeOEdRNdR0antVOtw"
     getTopSongs(token)
 }
 else {
