@@ -44,6 +44,18 @@ function drawCircleChart(data) {
         .style("text-anchor", "middle")
         .text("Danceability");
 
+    let chartImage = chart.append('g')
+        .attr("transform",
+        "translate(" + (width - 3*buffer) + " ," +
+        (buffer/2) + ")")
+        .append("image")
+        .attr("width", 2*buffer)
+        .attr("height", 2*buffer)
+        .style("visibility", "hidden")
+
+
+    let lastClicked = null
+
     circles = circles.attr("cx", function (d) {
         return xscale(d.features.valence)
     })
@@ -56,11 +68,23 @@ function drawCircleChart(data) {
         .style("fill", function (d) {
             return colorScale(d.popularity)
         })
+        .style("stroke", "black")
+        .style("stroke-width", 0)
         .on("mouseover", function (d) {
             console.log(d.song + " by " + d.artists[0])
+            chartImage.attr("xlink:href", d.images[1].url)
+            .style("visibility", "visible")
+        })
+        .on("mouseout", function (d) {
+            chartImage.style("visibility", "hidden")
         })
         .on("click", function (d) {
+            if(lastClicked != null)
+                d3.select(lastClicked).attr("r", 10).style("stroke-width", 0)
             loadSpotifyPlayer(d.songId)
+            d3.select(this).attr("r", 13).style("stroke-width", 2)
+            
+            lastClicked = this
         })
 }
 
