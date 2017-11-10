@@ -1,0 +1,15 @@
+/* Star Chart Styles */
+.star-axis {
+    stroke-width: 1px;
+    stroke: grey;
+    stroke-dasharray: 4;
+}
+.star-label {
+    font-size: 11px;
+}
+.star-path {
+    stroke: #444;
+    stroke-width: 1px;
+    fill: #FFFFCC;
+    fill-opacity: 0.5;
+}
