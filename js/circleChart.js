@@ -3,7 +3,7 @@ function drawCircleChart(data) {
 
     let buffer = 50;
     let width = 800;
-    let height = 1000;
+    let height = 800;
 
     chart.attr("height", height).attr("width", width)
 
@@ -18,7 +18,7 @@ function drawCircleChart(data) {
         .range([0 + buffer, height - buffer])
 
     let colorScale = d3.scaleLinear()
-        .domain([50, 100])
+        .domain([d3.min(data, x=> x.popularity), 100])
         .range(["#0000ff", "#ff0000"])
 
     chart.append("g")
@@ -86,21 +86,4 @@ function drawCircleChart(data) {
             
             lastClicked = this
         })
-}
-
-function loadSpotifyPlayer(id) {
-    let player = d3.select("#spotify-player")
-        .selectAll("iframe")
-        .data([id])
-
-    player = player.enter()
-        .append("iframe")
-        .merge(player)
-
-    player
-        .attr("width", 250)
-        .attr("height", 300)
-        .attr("frameborder", 0)
-        .attr("allowtransperancy", true)
-        .attr("src", "https://open.spotify.com/embed?uri=spotify:track:" + id)
 }

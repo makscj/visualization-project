@@ -8,7 +8,7 @@
     left: 250px;
     width: 250px;
     position: fixed;
-    background: darkolivegreen;
+    background: #6AE368;
     height: 100%;
     overflow-y: auto;
     z-index: 1000;
@@ -18,8 +18,7 @@
   #page-content-wrapper {
     width: 100%;
   }
-  
-  
+
   @media (max-width:767px) {
   
       #wrapper {

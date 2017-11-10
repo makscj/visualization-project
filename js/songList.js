@@ -32,7 +32,7 @@ function makeSongList(data){
                 {type: "artists", value: row.artists.join(", ") },
                 {type: "popularity", value: 'Popularity: ' + row.popularity/100.0 },
                 {type: "features", value: row.features },
-                {type: "img", value: row.images[1].url}
+                {type: "img", value: row.images[1].url, id: row.songId}
             ]
         })
 
@@ -59,6 +59,9 @@ function makeSongList(data){
         .attr("width", imgSize)
         .attr("height", imgSize)
         .attr("xlink:href", d=>d.value)
+        .on("click", function(d){
+            loadSpotifyPlayer(d.id)
+        })
 
     let r = 5
     let starWidth = svgWidth / 3
