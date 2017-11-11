@@ -1,13 +1,21 @@
 
-d3.json("./data/spotify/top50-larger.json", function (error, data) {
-    console.log(data)
 
 
-    drawCircleChart(data);
-    makeSongList(data);
-    drawAlbumChart(data);
+function updateCharts(drawList){
+    d3.json("./data/spotify/top50-larger.json", function (error, data) {
+        console.log(data)
 
-})
+        for(let i = 0; i < data.length; i++)
+            data[i].features.popularity = data[i].popularity/100.0
+    
+        if(drawList)
+            makeSongList(data);
+            
+        drawCircleChart(data);
+        drawAlbumChart(data);
+    
+    })
+}
 
 
 function loadSpotifyPlayer(id) {
@@ -26,3 +34,10 @@ function loadSpotifyPlayer(id) {
         .attr("allowtransperancy", true)
         .attr("src", "https://open.spotify.com/embed?uri=spotify:track:" + id)
 }
+
+updateCharts(true)
+
+
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};

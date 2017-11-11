@@ -27,11 +27,11 @@ function makeSongList(data){
 
     let cells = rows.selectAll("g")
         .data(function (row) {
-            row.features.popularity = row.popularity
+            // row.features.popularity = row.popularity
             return [
                 {type: "song", value: row.song },
                 {type: "artists", value: row.artists.join(", ") },
-                {type: "popularity", value: 'Popularity: ' + row.popularity/100.0 },
+                {type: "popularity", value: 'Popularity: ' + row.popularity },
                 {type: "features", value: row.features },
                 {type: "img", value: row.images[1].url, id: row.songId}
             ]
@@ -87,7 +87,7 @@ function makeSongList(data){
                 'D': v.danceability, 
                 'V' : v.valence,
                 'E' : v.energy,
-                'P' : v.popularity/100.0,
+                'P' : v.popularity,
                 'L' : v.liveness,
                 'I' : v.instrumentalness
             }
