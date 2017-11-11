@@ -1,4 +1,7 @@
 function drawCircleChart(data) {
+
+    
+
     let chart = d3.select("#chart").append("svg").style("border", "solid black 2px")
 
     let buffer = 50;
