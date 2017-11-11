@@ -27,6 +27,7 @@ function makeSongList(data){
 
     let cells = rows.selectAll("g")
         .data(function (row) {
+            row.features.popularity = row.popularity
             return [
                 {type: "song", value: row.song },
                 {type: "artists", value: row.artists.join(", ") },
@@ -88,7 +89,7 @@ function makeSongList(data){
                 'L' : v.liveness,
                 'E' : v.energy,
                 // TODO popularity
-                'P' : .5,
+                'P' : v.popularity/100.0,
                 'I' : v.instrumentalness
             }
             drawStarChart(svg, data)
