@@ -86,10 +86,9 @@ function makeSongList(data){
             let data = { 
                 'D': v.danceability, 
                 'V' : v.valence,
-                'L' : v.liveness,
                 'E' : v.energy,
-                // TODO popularity
                 'P' : v.popularity/100.0,
+                'L' : v.liveness,
                 'I' : v.instrumentalness
             }
             drawStarChart(svg, data)
