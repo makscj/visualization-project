@@ -2,7 +2,7 @@
 
 
 function updateCharts(drawList){
-    d3.json("./data/spotify/top50-larger.json", function (error, data) {
+    d3.json("./data/spotify/top50withalbums.json", function (error, data) {
         console.log(data)
 
         for(let i = 0; i < data.length; i++)

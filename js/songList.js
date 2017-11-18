@@ -87,9 +87,9 @@ function makeSongList(data){
                 'D': v.danceability, 
                 'V' : v.valence,
                 'E' : v.energy,
-                'P' : v.popularity,
-                'L' : v.liveness,
-                'I' : v.instrumentalness
+                'P' : v.popularity
+                // 'L' : v.liveness,
+                // 'I' : v.instrumentalness
             }
             drawStarChart(svg, data)
         })

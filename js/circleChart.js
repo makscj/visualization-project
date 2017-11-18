@@ -88,10 +88,10 @@ function drawCircleChart(data) {
         .style("stroke", "black")
         .style("stroke-width", 0)
     circles.on("mouseover", function (d) {
-            console.log(d.song + " by " + d.artists[0])
-            chartImage.attr("xlink:href", d.images[1].url)
-                .style("visibility", "visible")
-        })
+        console.log(d.song + " by " + d.artists[0])
+        chartImage.attr("xlink:href", d.images[1].url)
+            .style("visibility", "visible")
+    })
         .on("mouseout", function (d) {
             chartImage.style("visibility", "hidden")
         })
