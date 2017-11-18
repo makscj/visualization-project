@@ -2,7 +2,7 @@
 
 
 function updateCharts(drawList){
-    d3.json("./data/spotify/top50withalbums.json", function (error, data) {
+    d3.json("./data/top50withalbums.json", function (error, data) {
         console.log(data)
 
         for(let i = 0; i < data.length; i++)
@@ -35,7 +35,15 @@ function loadSpotifyPlayer(id) {
         .attr("src", "https://open.spotify.com/embed?uri=spotify:track:" + id)
 }
 
-updateCharts(true)
+d3.text("sidebar.html", function(text){
+    d3.select("#sidebar-wrapper").html(text)
+    updateCharts(true)
+})
+
+
+
+
+
 
 
 String.prototype.toProperCase = function () {

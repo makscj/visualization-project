@@ -27,44 +27,7 @@
 
     <div id="wrapper">
         <div id="sidebar-wrapper">
-
-            <div id="view-select" style="padding-left:1em">
-                <h3 style="color:white">Select a view:</h3>
-                <ul style="list-style:none;">
-                    <li>
-                        <a style="color:white;" href="#canvas">Star Plots</a>
-                    </li>
-                    <li>
-                        <a style="color:white;" href="#chart">Dimension Plot</a>
-                    </li>
-                    <li>
-                        <a style="color:white;" href="#chart-albums">Dimension Plot with Albums</a>
-                    </li>
-                    <li>
-                        <a style="color:white;" href="#info">Information</a>
-                    </li>
-                </ul>
-            </div>
-            <div id="spotify-player"></div>
-            <div style="padding: 1em">
-                <h4 style="color:white">Change Dimensions</h4>
-                <h5 style="color:white">X</h5>
-                <select id="xdim" onchange="updateCharts(false)">
-                    <option value="valence" selected>Valence</option>
-                    <option value="energy">Energy</option>
-                    <option value="danceability">Danceability</option>
-                    <option value="popularity">Popularity</option>
-
-                </select>
-                <br/>
-                <h5 style="color:white">Y</h5>
-                <select id="ydim" onchange="updateCharts(false)">
-                    <option value="valence">Valence</option>
-                    <option value="energy">Energy</option>
-                    <option value="danceability" selected>Danceability</option>
-                    <option value="popularity">Popularity</option>
-                </select>
-            </div>
+            
         </div>
         <div id="page-content-wrapper">
             <div class="page-content">
