@@ -1,10 +1,38 @@
+function download(text, name) {
+    var a = document.createElement("a");
+    var file = new Blob([text], { type: "text/plain" });
+    a.href = URL.createObjectURL(file);
+    a.download = name;
+    a.click();
+}
 
-function drawByDate(data) {
 
+function drawTopByWeekGraph(data, limit) {
 
-    let limit = 10
+    console.log(data)
+    
 
     data = data.filter(x => x.position <= limit).filter(x => x.name != "")
+
+    let genres = new Map()
+    for (let item of data) {
+        for (let genre of item.genres) {
+            if (!genres.has(genre))
+                genres.set(genre, 0)
+            let amount = genres.get(genre) + 1
+
+            genres.set(genre, amount)
+        }
+    }
+    let genreCounts = []
+    for (let g of genres)
+        genreCounts.push({ genre: g[0], count: g[1] })
+
+    console.log(genreCounts.sort((a,b) => b.count - a.count).filter(x => x.count > 0))
+
+
+
+
 
     let xdim = document.getElementById('xdim').value;
     let ydim = document.getElementById('ydim').value;
@@ -19,7 +47,7 @@ function drawByDate(data) {
 
 
     let width = window.innerWidth - 200
-    let height = 2*window.innerHeight
+    let height = 2 * window.innerHeight
 
     svg.attr("height", height)
         .attr("width", width)
@@ -47,8 +75,8 @@ function drawByDate(data) {
         .transition()
         .duration(500)
         .attr("x", function (d) {
-            // return xscale(d.position / (limit + 0.0))
-            return xscale(d.features[xdim])
+            return xscale(d.position / (limit + 0.0))
+            // return xscale(d.features[xdim])
         })
         .attr("y", function (d) {
 
@@ -63,8 +91,8 @@ function drawByDate(data) {
             return d.id
         })
         .style("opacity", .5)
-        
-        images
+
+    images
         .on("mouseover", function (d) {
             images.style("opacity", function (im) {
                 if (im.id != d.id)
@@ -94,9 +122,128 @@ function drawByDate(data) {
 
 }
 
+
+function drawByGenre(data){
+    
+
+    data = data.filter(x => x.song.name != "")
+    console.log(data)
+    
+    // let limit = 25
+
+    // data = data.filter(x => x.position <= limit).filter(x => x.name != "")
+
+    let genres = Array.from(new Set(data.map(x => x.song.genres).reduceRight((a,b) => a.concat(b), [])))
+
+    // let songIds = Array.from(new Set(data.map(x => x.id)))
+
+    console.log(genres)
+
+    let m = {}
+
+    for(let genre of genres){
+        m[genre] = [];
+    }
+
+    for(let song of data){
+        for(let genre of song.song.genres){
+            m[genre].push(song)
+        }
+    }
+
+    let genredata = [];
+
+    for(let genre of genres){
+        genredata.push({
+            genre: genre,
+            songs: m[genre]
+        })
+    }
+
+    console.log(genredata.filter(x => x.songs.length > 100))
+
+    // let genres = new Map()
+    // for (let item of data) {
+    //     for (let genre of item.genres) {
+    //         if (!genres.has(genre))
+    //             genres.set(genre, 0)
+    //         let amount = genres.get(genre) + 1
+
+    //         genres.set(genre, amount)
+    //     }
+    // }
+    // let genreCounts = []
+    // for (let g of genres)
+    //     genreCounts.push({ genre: g[0], count: g[1] })
+
+    // console.log(genreCounts.sort((a,b) => b.count - a.count).filter(x => x.count > 0))
+}
+
+
+function song(data){
+    console.log(data)
+    let songs = {};
+    let ids = Array.from(new Set(data.map(x => x.id)));
+
+    console.log(ids)
+
+    for(let id of ids){
+        songs[id] = {id: id, chart: [], artists: null, album: null, song: null}
+    }
+
+    for(let entry of data){
+        let id = entry.id;
+
+        songs[id].chart.push({
+            position: entry.position,
+            date: entry.date,
+            streams: entry.streams
+        })
+
+        songs[id].album = entry.album
+        songs[id].artists = {
+            artists: entry.artists,
+            followers: entry.followers.total,
+        }
+
+        songs[id].song = {
+            name: entry.name,
+            duration: entry.duration,
+            explicit: entry.explicit,
+            features: entry.features,
+            markets: entry.markets,
+            genres: entry.genres,
+        }
+
+    }
+
+    console.log(songs)
+
+
+    let out = []
+
+    for(let id of ids){
+        out.push(songs[id])
+    }
+
+    console.log(out)
+
+    download(JSON.stringify(out), "songs.json")
+
+
+}
+
 function updateCharts(drawList) {
     d3.json("./data/top200.json", function (error, data) {
-        drawByDate(data)
+        // drawTopByWeekGraph(data, 25)
+        // drawByGenre(data)
+        // song(data);
+    })
+
+    d3.json("./data/songs.json", function (error, data) {
+        // drawTopByWeekGraph(data, 25)
+        drawByGenre(data)
+        // song(data);
     })
 }
 

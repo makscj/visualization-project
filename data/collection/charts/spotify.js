@@ -15,9 +15,9 @@ let tokenIsSet = true
 token = "BQCrvebCr6DRAUX4El4ekC82T6wf4d9GWyG9syjG2evPN8vaG1CezQIcgCgzcQZFRJ3yCIbmw9o_NOesgwuWbg"
 let albumPromises = []
 
-function download(text, name, type) {
+function download(text, name) {
     var a = document.createElement("a");
-    var file = new Blob([text], { type: type });
+    var file = new Blob([text], { type: "text/plain" });
     a.href = URL.createObjectURL(file);
     a.download = name;
     a.click();
