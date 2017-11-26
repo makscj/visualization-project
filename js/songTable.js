@@ -1,13 +1,7 @@
-let svg = d3.select("#canvas")//.append("svg");
-
-    // svg.attr("width", 1000)
-    // svg.attr("height", 1000)
+function drawTable() {
+    let svg = d3.select("#canvas")//.append("svg");
 
     let tbody = svg.append("table").append("tbody")
-
-
-
-
 
     data = data.sort((a, b) => {
         // console.log(b.features.danceability)
@@ -16,12 +10,10 @@ let svg = d3.select("#canvas")//.append("svg");
 
     console.log(data)
 
-
     let rows = tbody.selectAll("tr")
         .data(data)
         .enter()
         .append("tr");
-
 
     let cells = rows.selectAll("td")
         .data(function (row) {
@@ -33,21 +25,19 @@ let svg = d3.select("#canvas")//.append("svg");
                 { type: "danceability", value: row.features.danceability },
                 { type: "valence", value: row.features.valence },
                 // {type: "popularity", value: row.popularity },
-                { type: "fmeasure", value: 2.0 * (row.features.valence * row.features.danceability) / (row.features.valence + row.features.danceability + 0.0) },
+                { type: "fmeasure", value: 2.0 * (row.features.valence * row.features.danceability) / 
+                        (row.features.valence + row.features.danceability + 0.0) },
                 // {type: "features", value: row.features },
             ]
         })
         .enter()
         .append("td")
         .html(function (d, i) {
-            if (d.type == "image") {
+            if (d.type == "image")
                 return "<img src=\"" + d.value + "\">"
-            }
-            if (d.type == "id") {
-
-                return "<iframe src=\"https://open.spotify.com/embed?uri=spotify:track:" + d.value + "\" width=\"250\" height=\"300\" frameborder=\"0\" allowtransparency=\"true\" id=\"" + d.value + "\"></iframe>"
-
-            }
+            if (d.type == "id")
+                return "<iframe src='https://open.spotify.com/embed?uri=spotify:track:" + d.value + 
+                    "' width='250' height='300' frameborder='0' allowtransparency='true' id='" + d.value + "'></iframe>"
             if (d.type != "features")
                 return d.value
         })
@@ -56,5 +46,4 @@ let svg = d3.select("#canvas")//.append("svg");
             if(d.type == "image")
                 loadSpotifyPlayer(d.id)
         })
-
- 
+}

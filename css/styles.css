@@ -1,3 +1,30 @@
+body {
+    background-color: #4A4A4A;
+    color: white;
+    text-color: white;
+}
+
+#wrapper {
+    /*
+    padding-left: 250px;
+    */
+    transition: all 0.4s ease 0s;
+}
+
+#page-content-wrapper {
+    /*
+    width: 100%;
+    */
+}
+
+#info {
+    margin: 4em 1em;
+}
+
+#canvas text {
+    fill: white;
+}
+
 /* Star Chart Styles */
 .star-axis {
     stroke-width: 1px;

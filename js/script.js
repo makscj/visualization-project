@@ -1,6 +1,3 @@
-
-
-
 function updateCharts(drawList){
     d3.json("./data/top50withalbums.json", function (error, data) {
         console.log(data)
@@ -17,35 +14,31 @@ function updateCharts(drawList){
     })
 }
 
+function loadMain () {
+    clearPage();
+    let content = d3.select('#page-content-wrapper')
 
-function loadSpotifyPlayer(id) {
-    let player = d3.select("#spotify-player")
-        .selectAll("iframe")
-        .data([id])
+    addDiv(content, 'canvas')
+    addDiv(content, 'chart', true)
+    addDiv(content, 'chart-albums', true)
+    addDiv(content, 'info')
 
-    player = player.enter()
-        .append("iframe")
-        .merge(player)
+    d3.text("info.html", function(text){
+        d3.select("#info").html(text)
+    })
 
-    player
-        .attr("width", 250)
-        .attr("height", 300)
-        .attr("frameborder", 0)
-        .attr("allowtransperancy", true)
-        .attr("src", "https://open.spotify.com/embed?uri=spotify:track:" + id)
+    updateCharts(true)
 }
 
 d3.text("sidebar.html", function(text){
-    d3.select("#sidebar-wrapper").html(text)
-    updateCharts(true)
+    let sidebar = d3.select("#sidebar-wrapper").html(text)
+
+    let sty = getComputedStyle(sidebar.node())
+    oneEm = parseFloat(sty.fontSize)
+    sidebar.style('min-width', oneEm * 16 + 'px')
+    sidebarWidth = parseFloat(sty.width) + 2 * oneEm
+    d3.select('#page-content-wrapper').style('padding-left', sidebarWidth + 'px')
+    contentWidth = window.innerWidth - sidebarWidth - oneEm / 2
+
+    loadMain();
 })
-
-
-
-
-
-
-
-String.prototype.toProperCase = function () {
-    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
-};
