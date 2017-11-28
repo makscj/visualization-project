@@ -1,5 +1,5 @@
-function addDiv(parnt, id, addSVG) {
-    let div = parnt.append('div')
+function addDiv(id, addSVG) {
+    let div = d3.select('#content').append('div')
     if(id != null)
         div.attr('id', id)
     if(addSVG)
@@ -14,7 +14,8 @@ function loadJavascript() {
         'starChart',
         'songList',
         'songTable',
-        'timescript'
+        'timescript',
+        'script'
     ]
     let body = d3.select('body')
     for(let s = 0; s < scripts.length; s++)
@@ -23,9 +24,39 @@ function loadJavascript() {
             .attr('src', 'js/' + scripts[s] + '.js')
 }
 
+function loadSidebar() {
+    d3.text("sidebar.html", function(text){
+        d3.select("#sidebar").html(text)
+    })
+}
+
+function computeContentWidth() {
+    let em = getComputedStyle(d3.select('body').node()).fontSize
+    oneEm = parseFloat(em)
+    sidebarWidth = oneEm * 18
+    contentWidth = window.innerWidth - sidebarWidth - oneEm
+}
+
+function windowResized() {
+    computeContentWidth()
+    let selected = d3.select('#sidebar .selected').node().click()
+    // TODO implement update instead of click given time
+    /*
+    let update = selected.attr('update')
+    window[update]()
+    */
+}
+
+function scrollToTopOfElement(selector) {
+    d3.select(selector).node().scrollIntoView()
+}
+
 function clearPage () {
-    d3.select('#page-content-wrapper').selectAll('*').remove()
+    d3.select('#content').selectAll('*').remove()
     d3.select('#spotify-player').selectAll('*').remove()
+    d3.select('#view-select ul ul').remove()
+    d3.select('#sidebar .selected').classed('selected', false)
+    d3.selectAll('#chart-dim *').remove()
 }
 
 function loadSpotifyPlayer(id) {
@@ -99,3 +130,5 @@ String.prototype.toProperCase = function () {
 };
 
 loadJavascript()
+loadSidebar()
+computeContentWidth()

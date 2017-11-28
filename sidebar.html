@@ -1,33 +1,15 @@
 <div id="view-select">
-    <h3>Select a view:</h3>
-    <ul>
+    <h3>Navigation</h3>
+    <ul id='outer-list'>
         <li>
-            <a onclick='loadMain()'>Main</a>
+            <a onclick='loadMain()' update='updateCharts'>Main</a>
         </li>
         <li>
-            <a onclick='loadTime()'>Time</a>
+            <a onclick='loadTime()' update='updateTimeCharts'>Time</a>
         </li>
     </ul>
 </div>
 
 <div id="spotify-player"></div>
 
-<div>
-    <h4>Change Dimensions</h4>
-    <h5>X</h5>
-    <select id="xdim" onchange="updateCharts(false)">
-        <option value="valence" selected>Valence</option>
-        <option value="energy">Energy</option>
-        <option value="danceability">Danceability</option>
-        <option value="popularity">Popularity</option>
-
-    </select>
-    <br/>
-    <h5>Y</h5>
-    <select id="ydim" onchange="updateCharts(false)">
-        <option value="valence">Valence</option>
-        <option value="energy">Energy</option>
-        <option value="danceability" selected>Danceability</option>
-        <option value="popularity">Popularity</option>
-    </select>
-</div>
+<div id='chart-dim'></div>

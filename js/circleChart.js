@@ -4,13 +4,17 @@ function drawCircleChart(data) {
     let ydim = document.getElementById('ydim').value;
 
 
-    let chart = d3.select("#chart").select("svg").style("border", "solid black 2px")
+    let chart = d3.select("#chart-circles svg")
 
     let buffer = 50;
-    let width = 800;
-    let height = 800;
+    let width = Math.min(window.innerHeight, contentWidth)
+    if(width != contentWidth)
+        chart.attr('transform', 'translate(' + (contentWidth - width) / 2 + ', 0)')
+    let height = width
 
-    chart.attr("height", height).attr("width", width)
+    chart
+        .attr("height", height)
+        .attr("width", width)
 
     let circles = chart.selectAll("circle").data(data)
 
@@ -43,7 +47,7 @@ function drawCircleChart(data) {
         .attr("transform",
         "translate(" + (width / 2) + " ," +
         (height - buffer / 4) + ")")
-        .style("text-anchor", "middle")
+        //.style("text-anchor", "middle")
         .attr("id", "xlabel")
         .text(xdim);
 
@@ -54,7 +58,7 @@ function drawCircleChart(data) {
         .attr("transform",
         "translate(" + (buffer / 3) + " ," +
         (height / 2) + ") rotate(-90)")
-        .style("text-anchor", "middle")
+        //.style("text-anchor", "middle")
         .attr("id", "ylabel")
         .text(ydim);
 

@@ -14,31 +14,57 @@ function updateCharts(drawList){
     })
 }
 
+function makeDimensionSelectors() {
+    let values = ['valence', 'energy', 'danceability', 'popularity']
+    let dim = d3.select('#chart-dim')
+    dim.append('h4').text('Change Dimensions')
+    dim = dim.selectAll('div').data(['x', 'y']).enter().append('div')
+    dim.append('h5').text(d => d.toUpperCase() + ': ')
+    .append('select')
+        .attr('id', d => d + 'dim')
+        .attr('onchange', 'updateCharts()')
+            .selectAll('option')
+            .data(values)
+            .enter()
+            .append('option')
+            .attr('value', d => d)
+            .text(d => d.toProperCase())
+    dim.select('#xdim')
+        .property('value', values[0])
+    dim.select('#ydim')
+        .property('value', values[2])
+}
+
+function makeScrollToCharts() {
+    let mainLi = d3.select('#view-select li')
+    mainLi = mainLi.append('ul').selectAll('li')
+        .data([
+            {text: 'Circle chart', selector: '#chart-circles'},
+            {text: 'Album chart', selector: '#chart-albums'},
+            {text: 'Info', selector: '#info'}
+        ])
+    mainLi.enter().append('li').append('a')
+        .attr('onclick', d => 'scrollToTopOfElement("' + d.selector + '")')
+        .text(d => d.text)
+}
+
 function loadMain () {
     clearPage();
-    let content = d3.select('#page-content-wrapper')
+    d3.select('#sidebar #outer-list>li a').classed('selected', true)
 
-    addDiv(content, 'canvas')
-    addDiv(content, 'chart', true)
-    addDiv(content, 'chart-albums', true)
-    addDiv(content, 'info')
+    addDiv('canvas', true)
+    addDiv('chart-circles', true)
+    addDiv('chart-albums', true)
+    addDiv('info')
 
     d3.text("info.html", function(text){
         d3.select("#info").html(text)
     })
 
+    makeScrollToCharts()
+    makeDimensionSelectors()
+
     updateCharts(true)
 }
 
-d3.text("sidebar.html", function(text){
-    let sidebar = d3.select("#sidebar-wrapper").html(text)
-
-    let sty = getComputedStyle(sidebar.node())
-    oneEm = parseFloat(sty.fontSize)
-    sidebar.style('min-width', oneEm * 16 + 'px')
-    sidebarWidth = parseFloat(sty.width) + 2 * oneEm
-    d3.select('#page-content-wrapper').style('padding-left', sidebarWidth + 'px')
-    contentWidth = window.innerWidth - sidebarWidth - oneEm / 2
-
-    loadMain();
-})
+loadMain()

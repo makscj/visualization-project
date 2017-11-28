@@ -1,10 +1,6 @@
 function drawTopByWeekGraphwithSearch(data, limit, ids) {
     data = data.filter(x => x.position <= limit).filter(x => x.name != "")
 
-    let xdim = document.getElementById('xdim').value;
-    let ydim = document.getElementById('ydim').value;
-
-
     let opacities = {
         hover: 1.0,
         default: 0.5,
@@ -50,7 +46,6 @@ function drawTopByWeekGraphwithSearch(data, limit, ids) {
         .duration(500)
         .attr("x", function (d) {
             return xscale(d.position / (limit + 0.0))
-            // return xscale(d.features[xdim])
         })
         .attr("y", function (d) {
 
@@ -132,9 +127,6 @@ function drawTopByWeekGraph(data, limit) {
 
     // console.log(genreCounts.sort((a, b) => b.count - a.count).filter(x => x.count > 0))
 
-    let xdim = document.getElementById('xdim').value;
-    let ydim = document.getElementById('ydim').value;
-
     let dates = Array.from(new Set(data.map(x => x.date)))
 
     console.log(data)
@@ -168,7 +160,6 @@ function drawTopByWeekGraph(data, limit) {
         .duration(500)
         .attr("x", function (d) {
             return xscale((d.position - 1) / (limit + 0.0))
-            // return xscale(d.features[xdim])
         })
         .attr("y", function (d) {
 
@@ -356,7 +347,7 @@ function song(data) {
 
 }
 
-function updateCharts(drawList) {
+function updateTimeCharts(drawList) {
     // search()
     d3.json("./data/top200.json", function (error, data) {
         drawTopByWeekGraph(data, 25)
@@ -374,14 +365,13 @@ function updateCharts(drawList) {
 
 function loadTime() {
     clearPage();
-    let content = d3.select('#page-content-wrapper')
+    d3.select('#sidebar #outer-list>li:nth-child(2) a').classed('selected', true)
 
     if(false)
-        addDiv(content)
-            .append('input')
+        addDiv().append('input')
             .attr('type', "text")
             .attr('name', "search")
             .attr('id', "searchentry")
-    addDiv(content, 'canvas', true)
-    updateCharts(true)
+    addDiv('canvas', true)
+    updateTimeCharts(true)
 }
