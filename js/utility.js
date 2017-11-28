@@ -1,3 +1,89 @@
+function addDiv(id, addSVG) {
+    let div = d3.select('#content').append('div')
+    if(id != null)
+        div.attr('id', id)
+    if(addSVG)
+        div.append('svg')
+    return div
+}
+
+function loadJavascript() {
+    let scripts = [
+        'dimensions',
+        'features',
+        'genre',
+        'script',
+        'search',
+        'shared',
+        'starChart',
+        'weekly'
+    ]
+    let body = d3.select('body')
+    for(let s = 0; s < scripts.length; s++)
+        body.append('script')
+            .attr('type', 'text/javascript')
+            .attr('src', 'js/' + scripts[s] + '.js')
+}
+
+function loadSidebar() {
+    d3.text("html/sidebar.html", function(text){
+        d3.select("#sidebar").html(text)
+    })
+}
+
+function computeContentWidth() {
+    let em = getComputedStyle(d3.select('body').node()).fontSize
+    oneEm = parseFloat(em)
+    sidebarWidth = oneEm * 18
+    contentWidth = window.innerWidth - sidebarWidth - oneEm
+}
+
+function windowResized() {
+    computeContentWidth()
+    let selected = d3.select('#sidebar .selected').node().click()
+    // TODO implement update instead of click given time
+    /*
+    let update = selected.attr('update')
+    window[update]()
+    */
+}
+
+function scrollToTopOfElement(selector) {
+    d3.select(selector).node().scrollIntoView()
+}
+
+function clearPage () {
+    d3.select('#content').selectAll('*').remove()
+    d3.select('#spotify-player').selectAll('*').remove()
+    d3.select('#view-select ul ul').remove()
+    d3.select('#sidebar .selected').classed('selected', false)
+    d3.selectAll('#chart-dim *').remove()
+    d3.selectAll('#weekly-limit *').remove()
+}
+
+function loadSpotifyPlayer(id) {
+    let player = d3.select("#spotify-player")
+    let bounds = player.node().getBoundingClientRect()
+
+    player = player.selectAll("iframe")
+        .data([id])
+
+    player = player.enter()
+        .append("iframe")
+        .merge(player)
+
+    let height = bounds.width * 1.1
+    if(height < 300)
+        height = 300
+
+    player
+        .attr("width", bounds.width)
+        .attr("height", height)
+        .attr("frameborder", 0)
+        .attr("allowtransperancy", true)
+        .attr("src", "https://open.spotify.com/embed?uri=spotify:track:" + id)
+}
+
 function download(text, name) {
     var a = document.createElement("a");
     var file = new Blob([text], { type: "text/plain" });
@@ -40,3 +126,11 @@ Set.prototype.difference = function(setB) {
     }
     return difference;
 }
+
+String.prototype.toProperCase = function () {
+    return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
+};
+
+loadJavascript()
+loadSidebar()
+computeContentWidth()

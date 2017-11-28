@@ -1,3 +1,43 @@
+/*
+ spotify green: 
+    #1ED760
+ spotify grey
+    #828282
+ spotify sand
+    #ECEBE8
+*/
+
+
+body {
+    background-color: #3A3A3A;
+    color: white;
+    text-color: white;
+}
+
+#wrapper {
+    transition: all 0.4s ease 0s;
+}
+
+#content {
+    padding-left: 18em;
+}
+
+#info {
+    margin: 4em 1em;
+}
+
+text {
+    fill: white;
+}
+
+line, path {
+    stroke: white;
+}
+
+#chart-circles svg, #chart-albums svg {
+    background: #4F4F4F;
+}
+
 /* Star Chart Styles */
 .star-axis {
     stroke-width: 1px;

@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="css/sidebar.css">
+    <link rel="stylesheet" href="../css/sidebar.css">
 
     <!-- Latest compiled and minified JavaScript -->
 
@@ -20,7 +20,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.9.0/d3-legend.js"></script> -->
     <!-- <link href="https://fonts.googleapis.com/css?family=Arvo" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet"> -->
-    <link rel='stylesheet' href='css/styles.css'>
+    <link rel='stylesheet' href='../css/styles.css'>
 </head>
 
 <body>
@@ -31,12 +31,16 @@
         </div>
         <div id="page-content-wrapper">
             <div class="page-content">
-                <div class="container">
+                <div class="flexible-container">
                     <div class="row">
+                            
                         <!-- <div>
                         <input type="text" name="search" id="searchentry" onchange="search()" oninput="search()"><br>
                         </div>     -->
-                        <div id="canvas">
+                        <div id="bars">
+                            <svg></svg>
+                        </div>
+                        <div id="chord">
                             <svg></svg>
                         </div>
                     </div>
@@ -45,8 +49,9 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="js/utility.js"></script>
-    <script type="text/javascript" src="js/timescript.js"></script>
+    <script type="text/javascript" src="../js/utility.js"></script>
+    <script type="text/javascript" src="../js/shared.js"></script>
+    <script type="text/javascript" src="../js/genre.js"></script>
     
 </body>
 

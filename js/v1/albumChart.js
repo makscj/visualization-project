@@ -1,5 +1,5 @@
 function drawAlbumChart(data) {
-    let chart = d3.select("#chart-albums").select("svg").style("border", "solid black 2px")
+    let chart = d3.select("#chart-albums svg")
 
 
     let xdim = document.getElementById('xdim').value;
@@ -7,8 +7,11 @@ function drawAlbumChart(data) {
 
 
     let buffer = 50;
-    let width = 800;
-    let height = 800;
+    let width = Math.min(window.innerHeight, contentWidth)
+    if(width != contentWidth)
+        // center horizontally
+        chart.attr('transform', 'translate(' + (contentWidth - width) / 2 + ', 0)')
+    let height = width
 
     chart.attr("height", height).attr("width", width)
 
@@ -40,7 +43,7 @@ function drawAlbumChart(data) {
         .attr("transform",
         "translate(" + (width / 2) + " ," +
         (height - buffer / 4) + ")")
-        .style("text-anchor", "middle")
+        //.style("text-anchor", "middle")
         .attr("id", "xlabelAlbum")
         .text(xdim);
 
@@ -51,7 +54,7 @@ function drawAlbumChart(data) {
         .attr("transform",
         "translate(" + (buffer / 3) + " ," +
         (height / 2) + ") rotate(-90)")
-        .style("text-anchor", "middle")
+        //.style("text-anchor", "middle")
         .attr("id", "ylabelAlbum")
         .text(ydim);
 
@@ -73,9 +76,9 @@ function drawAlbumChart(data) {
         .attr("width", .75 * buffer)
         .attr("height", .75 * buffer)
         .attr("xlink:href", d => d.images[1].url)
+        //.style("stroke", "black")
+        //.style("stroke-width", 0)
 
-        .style("stroke", "black")
-        .style("stroke-width", 0)
     circles
         .on("mouseover", function (d) {
             console.log(d.song + " by " + d.artists[0])
