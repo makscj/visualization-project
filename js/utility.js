@@ -9,13 +9,14 @@ function addDiv(id, addSVG) {
 
 function loadJavascript() {
     let scripts = [
-        'albumChart',
-        'circleChart', 
+        'dimensions',
+        'features',
+        'genre',
+        'script',
+        'search',
+        'shared',
         'starChart',
-        'songList',
-        'songTable',
-        'timescript',
-        'script'
+        'weekly'
     ]
     let body = d3.select('body')
     for(let s = 0; s < scripts.length; s++)
@@ -25,7 +26,7 @@ function loadJavascript() {
 }
 
 function loadSidebar() {
-    d3.text("sidebar.html", function(text){
+    d3.text("html/sidebar.html", function(text){
         d3.select("#sidebar").html(text)
     })
 }
@@ -57,6 +58,7 @@ function clearPage () {
     d3.select('#view-select ul ul').remove()
     d3.select('#sidebar .selected').classed('selected', false)
     d3.selectAll('#chart-dim *').remove()
+    d3.selectAll('#weekly-limit *').remove()
 }
 
 function loadSpotifyPlayer(id) {

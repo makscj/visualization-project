@@ -5,11 +5,11 @@ function updateCharts(drawList){
         for(let i = 0; i < data.length; i++)
             data[i].features.popularity = data[i].popularity/100.0
     
-        if(drawList)
-            makeSongList(data);
+        //if(drawList)
+            //makeSongList(data);
             
-        drawCircleChart(data);
-        drawAlbumChart(data);
+        //drawCircleChart(data);
+        //drawAlbumChart(data);
     
     })
 }
@@ -66,5 +66,3 @@ function loadMain () {
 
     updateCharts(true)
 }
-
-loadMain()
