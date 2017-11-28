@@ -15,9 +15,9 @@ function drawTopByWeekGraph(data, limit) {
 
     let width = window.innerWidth
 
-    let imgsize = Math.ceil(width/(limit+1)) - 5
+    let imgsize = Math.ceil(width / (limit + 1)) - 1
 
-    let height = (imgsize + 5)*numberOfWeeks
+    let height = (imgsize + 1) * numberOfWeeks
 
 
     console.log(limit)
@@ -35,7 +35,7 @@ function drawTopByWeekGraph(data, limit) {
 
     let xscale = d3.scaleLinear()
         .domain([1, limit])
-        .range([0, width-imgsize])
+        .range([0, width - imgsize])
 
     let yscale = d3.scaleLinear()
         .domain([0, dates.length])
@@ -48,15 +48,23 @@ function drawTopByWeekGraph(data, limit) {
 
     images = images.enter().append("image").merge(images)
 
-    
+
 
     // let imgsize = 50;
 
 
     images
+        .attr("href", function (d) {
+            return "../data/images/" + d.id
+        })
+        .attr("class", function (d) {
+            return d.id
+        })
         .transition()
         .duration(500)
         .attr("x", function (d) {
+            if(d.id == "3eR23VReFzcdmS7TYCrhCe")
+                console.log(d.position)
             return xscale(d.position)
             // return xscale(d.features[xdim])
         })
@@ -65,12 +73,6 @@ function drawTopByWeekGraph(data, limit) {
         })
         .attr("width", imgsize)
         .attr("height", imgsize)
-        .attr("href", function (d) {
-            return "../data/images/"+d.id
-        })
-        .attr("class", function (d) {
-            return d.id
-        })
         .style("opacity", .5)
 
     images

@@ -55,12 +55,13 @@ function drawTopByWeekGraph(data, limit, maxPerWeek, maxStream, minStream) {
 
     images = images.enter().append("image").merge(images)
 
-
-
-    // let imgsize = 50;
-
-
     images
+        .attr("href", function (d) {
+            return "../data/images/" + d.id
+        })
+        .attr("class", function (d) {
+            return d.id
+        })
         .transition()
         .duration(500)
         .attr("x", function (d) {
@@ -72,12 +73,6 @@ function drawTopByWeekGraph(data, limit, maxPerWeek, maxStream, minStream) {
         })
         .attr("width", imgsize)
         .attr("height", imgsize)
-        .attr("href", function (d) {
-            return "../data/images/" + d.id
-        })
-        .attr("class", function (d) {
-            return d.id
-        })
         .style("opacity", .5)
 
     images
@@ -101,24 +96,24 @@ function drawTopByWeekGraph(data, limit, maxPerWeek, maxStream, minStream) {
 
 function updateCharts() {
     d3.json("../data/top200.json", function (error, data) {
-        d3.json("../data/top200ByDate.json", function(error, data2){
+        d3.json("../data/top200ByDate.json", function (error, data2) {
             let maxPerWeek = {};
             let maxStream = 0;
             let minStream = Infinity
-            for(let week of data2){
+            for (let week of data2) {
                 let val = d3.max(week.songs, x => +x.streams)
                 let min = d3.min(week.songs, x => +x.streams)
                 maxPerWeek[week.date] = val
-                if(val > maxStream)
+                if (val > maxStream)
                     maxStream = val
-                if(min < minStream)
+                if (min < minStream)
                     minStream = min
-                
+
             }
             drawTopByWeekGraph(data, 25, maxPerWeek, maxStream, minStream)
         })
         // let limit = document.getElementById('limitSelect').value;
-        
+
     })
 }
 

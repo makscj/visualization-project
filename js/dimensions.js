@@ -68,14 +68,17 @@ function drawTopByWeekGraph(data, limit) {
 
     let circles = chart.selectAll("image").data(data)
 
+    circles.exit().remove()
+
     circles = circles
         .enter().append("image").merge(circles);
 
     circles
+    .attr("id", d => d.id)
+    .attr("href", d => encodeURI("../data/images/" + String(d.id)))//d.album.images[1].url
         .transition()
         .duration(500)
         .attr("x", function (d) {
-            console.log(d)
             return xscale(d.features[xdim])
         })
         .attr("y", function (d) {
@@ -83,10 +86,8 @@ function drawTopByWeekGraph(data, limit) {
         })
         .attr("width", .75 * buffer)
         .attr("height", .75 * buffer)
-        .attr("href", d => "../data/images/" + d.id)//d.album.images[1].url
+        
 
-        .style("stroke", "black")
-        .style("stroke-width", 0)
     circles
         .on("mouseover", function (d) {
             console.log(d.name + "\n" + d.artists[0].name)
@@ -99,6 +100,7 @@ function drawTopByWeekGraph(data, limit) {
                 .attr("height", .75 * buffer)
         })
         .on("click", function (d) {
+            console.log(d)
             loadSpotifyPlayer(d.id)
         })
 
