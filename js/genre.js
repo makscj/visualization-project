@@ -353,6 +353,7 @@ function drawChordDiagram(genreList) {
         })
         .enter().append("g");
 
+    //Outside Genre Section
     group.append("path")
         .style("fill", function (d) { return color(d.index); })
         .style("stroke", function (d) { return d3.rgb(color(d.index)).darker(); })
@@ -391,6 +392,7 @@ function drawChordDiagram(genreList) {
             return topGenres[d.index];
         });
 
+    //Ribbon between genres
     g.append("g")
         .selectAll("path")
         .data(function (chords) { return chords; })
@@ -407,7 +409,11 @@ function drawChordDiagram(genreList) {
             let srcGenre = classes[1]
             let trgGenre = classes[2]
 
-            d3.selectAll("." + trgGenre).style("opacity", opacity.hover)
+            console.log(".bar."+trgGenre + ",.bar."+srcGenre)            
+
+            d3.selectAll("." + trgGenre+"." + srcGenre).style("opacity", opacity.hover)
+            d3.selectAll(".bar."+trgGenre + ",.bar."+srcGenre).style("opacity", opacity.hover)
+            d3.selectAll(".genre."+trgGenre + ",.genre."+srcGenre).style("opacity", opacity.hover)
 
         })
         .on("mouseout", resetCharts)
