@@ -3,6 +3,10 @@
     margin: 0; 
 }
 
+#wrapper {
+    transition: all 0.4s ease 0s;
+}
+
 html, body {
     height: 100%;
   
@@ -16,9 +20,5 @@ body > * {
 }
 
 #content {
-    width: 800px;
-    margin-right: auto; 
-    margin-left: auto;
-    flex-grow: 1;
-    background-color: white;
+    padding-left: 18em;
 }

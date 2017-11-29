@@ -223,19 +223,19 @@ function drawChordDiagram(genreList) {
         .style("fill", function (d) { return color(d.index); })
         .style("stroke", function (d) { return d3.rgb(color(d.index)).darker(); })
         .attr("class", function (d) {
-            return "genre " + topGenres[d.index].replace(" ", "-")
+            return "genre " + topGenres[d.index].replace(" ", "-");
         })
         .attr("d", arc)
         .on("mouseover", function (d) {
             let classes = d3.select(this).attr("class").split(" ");
-            let srcGenre = classes[1]
-            let trgGenre = classes[1]
+            let srcGenre = classes[1];
+            let trgGenre = classes[1];
 
-            d3.selectAll("." + trgGenre).style("opacity", 1.0)
+            d3.selectAll("." + trgGenre).style("opacity", 1.0);
 
         })
         .on("mouseout", function (d) {
-            d3.selectAll(".ribbons").style("opacity", 0.4)
+            d3.selectAll(".ribbons").style("opacity", 0.4);
         })
 
     groupTick = group.append("g")
@@ -272,14 +272,14 @@ function drawChordDiagram(genreList) {
         .style("stroke", function (d) { return d3.rgb(color(d.target.index)).darker(); })
         .on("mouseover", function (d) {
             let classes = d3.select(this).attr("class").split(" ");
-            let srcGenre = classes[1]
-            let trgGenre = classes[2]
+            let srcGenre = classes[1];
+            let trgGenre = classes[2];
 
-            d3.selectAll("." + trgGenre).style("opacity", 1.0)
+            d3.selectAll("." + trgGenre).style("opacity", 1.0);
 
         })
         .on("mouseout", function (d) {
-            d3.selectAll(".ribbons").style("opacity", 0.4)
+            d3.selectAll(".ribbons").style("opacity", 0.4);
         })
 
     // Returns an array of tick angles and values for a given group and step.
@@ -294,14 +294,14 @@ function drawChordDiagram(genreList) {
 function updateGenreCharts() {
     d3.json("../data/songs.json", function (error, data) {
         // let limit = document.getElementById('limitSelect').value;
-        drawByGenre(data)
+        drawByGenre(data);
     })
 }
 
 
 function loadGenre() {
     clearPage();
-    d3.select('#sidebar #outer-list>li:nth-child(2) a').classed('selected', true)
+    d3.select('#sidebar #outer-list>li:nth-child(2) a').classed('selected', true);
 
     if(false)
         addDiv().append('input')
