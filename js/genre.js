@@ -128,13 +128,11 @@ function drawSongsWithGenre(data, limit) {
         })
         .attr("class", function (d) {
             if(d.genres.length > 0){
-                return "box " + d.id + " " + d.genres.map(x => x.replace(/ /g, "-")).join(" ")
+                return "box " + d.id + " " + fixGenres(d.genres).join(" ")
             }
             return "box " + d.id
             
         })
-        .transition()
-        .duration(500)
         .attr("x", function (d) {
             return xscale(d.position)
         })
@@ -159,7 +157,7 @@ function drawSongsWithGenre(data, limit) {
                 return opacity.default
             })
 
-            let joinedGenres = d.genres.map(x => x.replace(/ /g, "-")).map(x => ".genre."+x+",.bar."+x+",.ribbon."+x).join(",")
+            let joinedGenres = fixGenres(d.genres).map(x => ".genre."+x+",.bar."+x+",.ribbon."+x).join(",")
 
             d3.selectAll(joinedGenres).style("opacity", opacity.hover)
 
@@ -167,15 +165,7 @@ function drawSongsWithGenre(data, limit) {
             
 
         })
-        /*
-        function (d) {
-            images.style("opacity", im => {
-                if(a.indexOf(im.genre) >= 4)
-                    return opacity.rap
-                return opacity.default
-            })
-        }
-        */
+       
         .on("mouseout", resetCharts)
         .on("click", function (d) {
             console.log(d)
@@ -183,6 +173,11 @@ function drawSongsWithGenre(data, limit) {
         })
 
 
+}
+
+
+function fixGenres(genres){
+    return genres.map(x => x.replace(/ /g, "-")).filter(x => x.indexOf("&") == -1)
 }
 
 
@@ -379,8 +374,6 @@ function drawChordDiagram(genreList) {
         .attr("class", "group-tick")
         .attr("transform", function (d) { return "rotate(" + (d.angle * 180 / Math.PI - 90) + ") translate(" + outerRadius + ",0)"; });
 
-    // groupTick.append("line")
-    //     .attr("x2", 6);
 
     groupTick
         .append("text")
@@ -408,8 +401,6 @@ function drawChordDiagram(genreList) {
             let classes = d3.select(this).attr("class").split(" ");
             let srcGenre = classes[1]
             let trgGenre = classes[2]
-
-            console.log(".bar."+trgGenre + ",.bar."+srcGenre)            
 
             d3.selectAll("." + trgGenre+"." + srcGenre).style("opacity", opacity.hover)
             d3.selectAll(".bar."+trgGenre + ",.bar."+srcGenre).style("opacity", opacity.hover)
