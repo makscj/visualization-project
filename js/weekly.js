@@ -87,9 +87,9 @@ function drawTopByWeekGraph(data, limit) {
 }
 
 function updateTimeCharts() {
-    d3.json("data/top200.json", function (error, data) {
-        let limit = document.getElementById('limitSelect').value;
-        drawTopByWeekGraph(data, +limit)
+    d3.json("/data/top200.json", function (error, data) {
+        //let limit = document.getElementById('limitSelect').value;
+        //drawTopByWeekGraph(data, +limit)
     })
 }
 
