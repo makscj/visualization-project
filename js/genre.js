@@ -381,8 +381,8 @@ function drawChordDiagram(genreList) {
         .style("stroke", function (d) { return d3.rgb(genreColors[topGenres[d.target.index]]).darker(); })
         .on("mouseover", function (d) {
             let classes = d3.select(this).attr("class").split(" ");
-            let srcGenre = classes[1]
-            let trgGenre = classes[2]
+            let srcGenre = classes[1];
+            let trgGenre = classes[2];
 
             d3.selectAll("." + trgGenre + "." + srcGenre).style("opacity", opacity.hover)
             d3.selectAll(".bar." + trgGenre + ",.bar." + srcGenre).style("opacity", opacity.hover)
