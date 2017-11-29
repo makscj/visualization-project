@@ -24,12 +24,12 @@ function loadJavascript() {
     for(let s = 0; s < scripts.length; s++)
         body.append('script')
             .attr('type', 'text/javascript')
-            .attr('src', 'js/' + scripts[s] + '.js')
+            .attr('src', '/js/' + scripts[s] + '.js')
 }
 
 function loadSidebar() {
-    d3.text("html/sidebar.html", function(text){
-        d3.select("#sidebar").html(text)
+    d3.text("/html/sidebar.html", function(text){
+        d3.select("#sidebar").html(text);
     })
 }
 
@@ -42,7 +42,7 @@ function computeContentWidth() {
 
 function windowResized() {
     computeContentWidth()
-    let selected = d3.select('#sidebar .selected').node().click()
+    //let selected = d3.select('#sidebar .selected').node().click()
     // TODO implement update instead of click given time
     /*
     let update = selected.attr('update')
