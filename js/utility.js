@@ -9,11 +9,11 @@ function addDiv(id, addSVG) {
 
 function loadJavascript() {
     let scripts = [
-        'dimensions',
-        'features',
+        // 'dimensions',
+        // 'features',
         'genre',
-        'script',
-        'search',
+        // 'script',
+        // 'search',
         'starChart',
         'weekly'
     ]
