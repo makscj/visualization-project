@@ -14,7 +14,6 @@ function loadJavascript() {
         'genre',
         'script',
         'search',
-        'shared',
         'starChart',
         'weekly'
     ]

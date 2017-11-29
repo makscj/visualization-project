@@ -19,10 +19,7 @@ function drawTopByWeekGraph(data, limit) {
     let height = (imgsize + 1) * numberOfWeeks
 
 
-    console.log(limit)
-    console.log(width)
-    console.log(imgsize)
-    console.log(height)
+    
 
     // let height = 2 * window.innerHeight
 
@@ -60,8 +57,6 @@ function drawTopByWeekGraph(data, limit) {
         .transition()
         .duration(500)
         .attr("x", function (d) {
-            if(d.id == "3eR23VReFzcdmS7TYCrhCe")
-                console.log(d.position)
             return xscale(d.position)
             // return xscale(d.features[xdim])
         })
@@ -109,7 +104,9 @@ function loadTime() {
             .attr('id', "searchentry")
     addDiv('canvas', true)
 
-    d3.select('#weekly-limit').append('select').attr('id', 'limitSelect')
+    d3.select('#weekly-limit').append('select')
+        .attr('id', 'limitSelect')
+        .on("change", updateTimeCharts)
         .selectAll('option').data([10, 25, 50, 200]).enter()
         .append('option')
         .attr('value', d => d)

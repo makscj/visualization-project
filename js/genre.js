@@ -67,10 +67,10 @@ function drawGenreBars(genreList){
     console.log(colors)
 
 
-    let width = 960
-    let height = 960
+    let width = 200
+    let height = 200
 
-    let padding = 200
+    let padding = 20
 
     let svg = d3.select("#bars").select("svg")
         .attr("width", width)
@@ -95,7 +95,7 @@ function drawGenreBars(genreList){
 
         svg.append("g")
         .call(d3.axisLeft(yscale))
-        .attr("transform", "translate(" + (padding-10) + "," + (0) + ")")
+        .attr("transform", "translate(" + (padding) + "," + (0) + ")")
 
     bars = bars.enter().append("rect")
         .attr("x", function(d, i){
@@ -107,7 +107,7 @@ function drawGenreBars(genreList){
             return yscale(d.songs.length)
         })
         .attr("width", function(d){
-            return 50
+            return width/10 - padding/2
         })
         .attr("height", function(d, i){
             console.log(d.genre + " " + (height - yscale(d.songs.length)))
@@ -176,8 +176,8 @@ function drawChordDiagram(genreList) {
 
 
 
-    let width = 960
-    let height = 960
+    let width = 300
+    let height = 300
 
     let svg = d3.select("#chord").select("svg")
         .attr("width", width + 100)
@@ -291,9 +291,33 @@ function drawChordDiagram(genreList) {
     }
 }
 
-function updateCharts() {
+function updateGenreCharts() {
     d3.json("../data/songs.json", function (error, data) {
         // let limit = document.getElementById('limitSelect').value;
         drawByGenre(data)
     })
+}
+
+
+function loadGenre() {
+    clearPage();
+    d3.select('#sidebar #outer-list>li:nth-child(2) a').classed('selected', true)
+
+    if(false)
+        addDiv().append('input')
+            .attr('type', "text")
+            .attr('name', "search")
+            .attr('id', "searchentry")
+    addDiv('bars', true)
+    addDiv('chord', true)
+
+    // d3.select('#weekly-limit').append('select')
+    //     .attr('id', 'limitSelect')
+    //     .on("change", updateTimeCharts)
+    //     .selectAll('option').data([10, 25, 50, 200]).enter()
+    //     .append('option')
+    //     .attr('value', d => d)
+    //     .text(d => d)
+
+    updateGenreCharts()
 }
