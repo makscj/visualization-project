@@ -22,7 +22,7 @@ function loadJavascript() {
     for(let s = 0; s < scripts.length; s++)
         body.append('script')
             .attr('type', 'text/javascript')
-            .attr('src', '/js/' + scripts[s] + '.js')
+            .attr('src', '{{ site.baseurl}}/js/' + scripts[s] + '.js')
 }
 
 function loadSidebar() {
