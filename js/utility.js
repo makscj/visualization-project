@@ -9,7 +9,7 @@ function addDiv(id, addSVG) {
 
 function loadJavascript() {
     let scripts = [
-        // 'dimensions',
+        'dimensions',
         // 'features',
         'genre',
         // 'script',
@@ -59,6 +59,7 @@ function clearPage () {
     d3.selectAll('#chart-dim *').remove()
     d3.selectAll('#weekly-limit *').remove()
     d3.selectAll('#toggle *').remove()
+    d3.selectAll('#date-select *').remove()
 }
 
 function loadSpotifyPlayer(id) {

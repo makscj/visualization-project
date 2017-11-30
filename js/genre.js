@@ -112,8 +112,6 @@ function drawSongsWithGenre(data, limit) {
 
 
 
-    // let imgsize = 50;
-
 
     images
         .style("fill", function(d){
