@@ -7,7 +7,7 @@ function drawTopByWeekGraph(data, limit) {
 
     let numberOfWeeks = dates.length;
 
-    console.log(data)
+    // console.log(data)
 
     let svg = d3.select("#canvas svg")
 

@@ -9,13 +9,14 @@ function addDiv(id, addSVG) {
 
 function loadJavascript() {
     let scripts = [
-        // 'dimensions',
+        'dimensions',
         // 'features',
         'genre',
         // 'script',
         // 'search',
         'starChart',
-        'weekly'
+        'weekly',
+        'streams'
     ]
     let body = d3.select('body')
     for(let s = 0; s < scripts.length; s++)
@@ -58,6 +59,8 @@ function clearPage () {
     d3.select('#sidebar .selected').classed('selected', false)
     d3.selectAll('#chart-dim *').remove()
     d3.selectAll('#weekly-limit *').remove()
+    d3.selectAll('#toggle *').remove()
+    d3.selectAll('#date-select *').remove()
 }
 
 function loadSpotifyPlayer(id) {
