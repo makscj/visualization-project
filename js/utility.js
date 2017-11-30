@@ -1,3 +1,5 @@
+sidebarWidth = 0
+
 function addDiv(id, addSVG) {
     let div = d3.select('#content').append('div')
     if(id != null)
@@ -63,7 +65,7 @@ function clearPage () {
     d3.selectAll('#date-select *').remove()
 }
 
-function loadSpotifyPlayer(id) {
+function loadSpotifyPlayer(id, isCompact = false) {
     let player = d3.select("#spotify-player")
     let bounds = player.node().getBoundingClientRect()
 
@@ -77,6 +79,10 @@ function loadSpotifyPlayer(id) {
     let height = bounds.width * 1.1
     if(height < 300)
         height = 300
+    
+    //todo fix it cause I don't care
+    if(isCompact)
+        height = 80
 
     player
         .attr("width", bounds.width)

@@ -4,6 +4,14 @@ let opacity = {
     rap: 0.2
 }
 
+let listTopGenres = ["pop", "tropical house", "post-teen pop", "dance pop", "pop rap", "rap", "trap music", "dwn trap", "southern hip hop", "hip hop"]
+let listTopGenreColors = ["0055ff", "39438e", "9ca6f4", "4b5ff4", "aa66ff", "ff0033", "5b271e", "ce4c35", "f4d3cd", "ed9282"]
+
+let genreColors = {}
+listTopGenres.forEach((x, i) => {
+    genreColors[x] = listTopGenreColors[i]
+})
+
 function drawByGenre(data, toggled) {
 
 
@@ -66,13 +74,7 @@ function drawByGenre(data, toggled) {
 
 
 function drawSongsWithGenre(data, limit) {
-    a = ["pop", "tropical house", "post-teen pop", "dance pop", "pop rap", "rap", "trap music", "dwn trap", "southern hip hop", "hip hop"]
-    let b = ["0055ff", "39438e", "9ca6f4", "4b5ff4", "aa66ff", "ff0033", "5b271e", "ce4c35", "f4d3cd", "ed9282"]
-
-    let colors = {}
-    a.forEach((x, i) => {
-        colors[x] = b[i]
-    })
+    
 
     
     let isChecked = document.getElementById('displayImage').checked;
@@ -115,7 +117,7 @@ function drawSongsWithGenre(data, limit) {
 
     images
         .style("fill", function(d){
-            return colors[d.genre]
+            return genreColors[d.genre]
         })
         .attr("href", function(d){
             return "data/images/" + d.id
@@ -158,7 +160,7 @@ function drawSongsWithGenre(data, limit) {
         .on("mouseout", resetCharts)
         .on("click", function (d) {
             console.log(d)
-            loadSpotifyPlayer(d.id)
+            loadSpotifyPlayer(d.id, true)
         })
 
 
@@ -176,20 +178,20 @@ function drawGenreBars(genreList) {
 
     let top10 = genreList.filter(x => x.songs.length > 100)
 
-    a = ["pop", "tropical house", "post-teen pop", "dance pop", "pop rap", "rap", "trap music", "dwn trap", "southern hip hop", "hip hop"]
-    let b = ["0055ff", "39438e", "9ca6f4", "4b5ff4", "aa66ff", "ff0033", "5b271e", "ce4c35", "f4d3cd", "ed9282"]
+    // a = ["pop", "tropical house", "post-teen pop", "dance pop", "pop rap", "rap", "trap music", "dwn trap", "southern hip hop", "hip hop"]
+    // let b = ["0055ff", "39438e", "9ca6f4", "4b5ff4", "aa66ff", "ff0033", "5b271e", "ce4c35", "f4d3cd", "ed9282"]
 
-    let colors = {}
-    a.forEach((x, i) => {
-        colors[x] = b[i]
-    })
+    // let colors = {}
+    // a.forEach((x, i) => {
+    //     colors[x] = b[i]
+    // })
 
 
 
-    let width = 300
-    let height = 300
+    let width = sidebarWidth - 20
+    let height = sidebarWidth - 20
 
-    let padding = 40
+    let padding = 20
 
     let svg = d3.select("#bars").select("svg")
         .attr("width", width)
@@ -232,7 +234,7 @@ function drawGenreBars(genreList) {
             return height - yscale(d.songs.length) - 10
         })
         .style("fill", function (d) {
-            return colors[d.genre]
+            return genreColors[d.genre]
         })
         .style("opacity", opacity.default)
         .on("mouseover", function (d) {
@@ -249,7 +251,7 @@ function drawChordDiagram(genreList) {
 
     let topGenres = top10.map(x => x.genre)
     topGenres = ["pop", "tropical house", "post-teen pop", "dance pop", "pop rap", "rap", "trap music", "dwn trap", "southern hip hop", "hip hop"]
-    let genreColors = ["0055ff", "39438e", "9ca6f4", "4b5ff4", "aa66ff", "ff0033", "5b271e", "ce4c35", "f4d3cd", "ed9282"]
+    // let genreColors = ["0055ff", "39438e", "9ca6f4", "4b5ff4", "aa66ff", "ff0033", "5b271e", "ce4c35", "f4d3cd", "ed9282"]
 
     let chordMatrix = {};
 
@@ -294,13 +296,14 @@ function drawChordDiagram(genreList) {
     }
 
 
+    console.log(sidebarWidth)
 
-    let width = 300
-    let height = 300
+    let width = sidebarWidth - 20
+    let height = sidebarWidth - 20
 
     let svg = d3.select("#chord").select("svg")
-        .attr("width", width + 100)
-        .attr("height", height + 100)
+        .attr("width", width)
+        .attr("height", height)
 
     let outerRadius = Math.min(width, height) * 0.5 - 40
     let innerRadius = outerRadius - 30;
@@ -321,12 +324,10 @@ function drawChordDiagram(genreList) {
     var ribbon = d3.ribbon()
         .radius(innerRadius);
 
-    var color = d3.scaleOrdinal()
-        .domain(d3.range(10))
-        .range(genreColors);
+    
 
     var g = svg.append("g")
-        .attr("transform", "translate(" + (width / 2 + 100) + "," + (height / 2 + 50) + ")")
+        .attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
         .datum(chords);
 
 
@@ -340,8 +341,8 @@ function drawChordDiagram(genreList) {
 
     //Outside Genre Section
     group.append("path")
-        .style("fill", function (d) { return color(d.index); })
-        .style("stroke", function (d) { return d3.rgb(color(d.index)).darker(); })
+        .style("fill", function (d) { return genreColors[topGenres[d.index]]; })
+        .style("stroke", function (d) { return d3.rgb(genreColors[topGenres[d.index]]).darker(); })
         .style("opacity", opacity.default)
         .attr("class", function (d) {
             return "genre " + topGenres[d.index].replace(/ /g, "-")
@@ -385,8 +386,8 @@ function drawChordDiagram(genreList) {
         .attr("class", function (d) {
             return "ribbons " + topGenres[d.source.index].replace(/ /g, "-") + " " + topGenres[d.target.index].replace(/ /g, "-")
         })
-        .style("fill", function (d) { return color(d.target.index); })
-        .style("stroke", function (d) { return d3.rgb(color(d.target.index)).darker(); })
+        .style("fill", function (d) { return genreColors[topGenres[d.index]]; })
+        .style("stroke", function (d) { return d3.rgb(genreColors[topGenres[d.index]]).darker(); })
         .on("mouseover", function (d) {
             let classes = d3.select(this).attr("class").split(" ");
             let srcGenre = classes[1]
@@ -430,8 +431,8 @@ function loadGenre() {
             .attr('type', "text")
             .attr('name', "search")
             .attr('id', "searchentry")
-    addDiv('bars', true)
-    addDiv('chord', true)
+    // addDiv('bars', true)
+    // addDiv('chord', true)
     addDiv('canvas', true)
 
     // d3.select('#weekly-limit').append('select')
@@ -449,6 +450,16 @@ function loadGenre() {
         .attr("type", "checkbox")
         .attr("id", "displayImage")
         .on("change", toggle)
+
+    d3.select("#side-chart")
+        .append("div")
+        .attr("id", "bars")
+        .append("svg")
+    
+    d3.select("#side-chart")
+        .append("div")
+        .attr("id", "chord")
+        .append("svg")
 
     updateGenreCharts(false)
 }
