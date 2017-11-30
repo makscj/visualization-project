@@ -19,10 +19,9 @@ div.ken-story p{
 }
 
 li.ken-nav-item:hover {
-    color:#828282;
     cursor: pointer;
 }
 
 li.nav-selected {
-    color:#1ED760;
+    color: red;
 }
