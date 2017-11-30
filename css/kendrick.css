@@ -1,24 +1,28 @@
-* { 
-    padding: 0; 
-    margin: 0; 
+
+/* Navigation Bar */
+li.ken-nav-item {
+    display: inline;
+    list-style: none;
+    font-size: 19px;
+    margin-right: 5em;}
+
+ul.ken-nav-list {
+    padding-left: 5em;
 }
 
-#wrapper {
-    transition: all 0.4s ease 0s;
+#ken-navigation {
+    padding-bottom: 1em;
 }
 
-html, body {
-    height: 100%;
-  
-    display: flex;
-    flex-direction: column;
-    background-color: black;
+div.ken-story p{
+    font-size: 20px;
 }
 
-body > * {
-    flex-shrink: 0;
+li.ken-nav-item:hover {
+    color:#828282;
+    cursor: pointer;
 }
 
-#content {
-    padding-left: 18em;
+li.nav-selected {
+    color:#1ED760;
 }
