@@ -182,7 +182,7 @@ function drawGenreBars(genreList) {
     let width = sidebarWidth - 20
     let height = sidebarWidth - 20
 
-    let padding = 20
+    let padding = 200
 
     let svg = d3.select("#bars").select("svg")
         .attr("width", width)
@@ -206,7 +206,7 @@ function drawGenreBars(genreList) {
 
     svg.append("g")
         .call(d3.axisLeft(yscale))
-        .attr("transform", "translate(" + (padding) + "," + (0) + ")")
+        .attr("transform", "translate(" + (padding-10) + "," + (0) + ")")
 
     bars = bars.enter().append("rect")
         .attr("class", function (d) {
@@ -381,8 +381,8 @@ function drawChordDiagram(genreList) {
         .style("stroke", function (d) { return d3.rgb(genreColors[topGenres[d.target.index]]).darker(); })
         .on("mouseover", function (d) {
             let classes = d3.select(this).attr("class").split(" ");
-            let srcGenre = classes[1];
-            let trgGenre = classes[2];
+            let srcGenre = classes[1]
+            let trgGenre = classes[2]
 
             d3.selectAll("." + trgGenre + "." + srcGenre).style("opacity", opacity.hover)
             d3.selectAll(".bar." + trgGenre + ",.bar." + srcGenre).style("opacity", opacity.hover)
