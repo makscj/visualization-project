@@ -3,11 +3,16 @@ function loadKendrick() {
     d3.select('#sidebar #outer-list>li:nth-child(3) a').classed('selected', true);
     loadSpotifyPlayerKendrick();
     loadNavigation();
+
+    d3.select('#nav-blood').on('click', this.loadStoryBlood);
+    d3.select('#nav-dna').on('click', this.loadStoryDna);
+    d3.select('#nav-loyalty').on('click', this.loadStoryLoyalty);
+    d3.select('#nav-humble').on('click', this.loadStoryHumble);
+    d3.select('#nav-love').on('click', this.loadStoryLove);
 }
 
 
 function loadSpotifyPlayerKendrick() {
-    console.log("loading player");
     let playerDiv = d3.select("#spotify-player");
     let bounds = playerDiv.node().getBoundingClientRect();
 
@@ -22,8 +27,8 @@ function loadSpotifyPlayerKendrick() {
 }
 
 
-function loadStoryOne() {
-    this.setNavColoring('#nav-blood');
+function loadStoryBlood() {
+    setNavColoring('#nav-blood');
     let storyDiv = d3.select("#content")
         .append('div')
         .attr('id', 'ken-story-1')
@@ -46,8 +51,30 @@ function loadStoryOne() {
                 .duration(500)
                 .style('opacity', 1);
         })
+}
 
 
+function loadStoryDna() {
+    clearStory();
+    setNavColoring('#nav-dna');
+}
+
+
+function loadStoryLoyalty() {
+    clearStory();
+    setNavColoring('#nav-loyalty');
+}
+
+
+function loadStoryHumble() {
+    clearStory();
+    setNavColoring('#nav-humble');
+}
+
+    
+function loadStoryLove() {
+    clearStory();
+    setNavColoring('#nav-love');
 }
 
 
@@ -80,7 +107,7 @@ function loadNavigation() {
         .duration(1000)
         .style('opacity', 1)
         .on('end', function() {
-            this.loadStoryOne();
+            this.loadStoryBlood();
         }.bind(this));
 }
 
@@ -88,4 +115,8 @@ function loadNavigation() {
 function setNavColoring(id) {
     d3.selectAll('.ken-nav-item').classed('nav-selected', false);
     d3.select(id).classed('nav-selected', true);
+}
+
+function clearStory() {
+    d3.select('.ken-story').remove();
 }
