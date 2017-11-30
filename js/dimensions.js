@@ -17,7 +17,7 @@ function drawDimensions(data, limit) {
 
     let buffer = 50;
     let width = contentWidth;
-    let height = contentWidth;
+    let height = contentWidth*(2.0/3.0);
 
     chart.attr("height", height).attr("width", width)
 
