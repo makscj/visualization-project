@@ -50,12 +50,12 @@ function drawLabels(starData, cx, cy, g) {
     }
 };
 
-function drawArea(starData, cx, cy, g) {
+function drawArea(starData, cx, cy, g, w) {
     var path = d3.radialLine();
 
     let scale = d3.scaleLinear()
     .domain([0, 1])
-    .range([0, 30]);
+    .range([0, w/2.1 - 15]);
 
     let pathData = [];
     let radius = Math.PI / 2;
@@ -86,5 +86,5 @@ function drawStarChart(svg, starData) {
     
     drawLines(starData, (SVG_WIDTH / 2), (SVG_HEIGHT / 2), g);
     drawLabels(starData, (SVG_WIDTH / 2), (SVG_HEIGHT / 2), g);
-    drawArea(starData, (SVG_WIDTH / 2), (SVG_HEIGHT / 2), g);
+    drawArea(starData, (SVG_WIDTH / 2), (SVG_HEIGHT / 2), g, SVG_WIDTH);
 };

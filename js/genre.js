@@ -67,10 +67,10 @@ function drawGenreBars(genreList){
     console.log(colors)
 
 
-    let width = 200
-    let height = 200
+    let width = 960
+    let height = 960
 
-    let padding = 20
+    let padding = 200
 
     let svg = d3.select("#bars").select("svg")
         .attr("width", width)
@@ -95,7 +95,7 @@ function drawGenreBars(genreList){
 
         svg.append("g")
         .call(d3.axisLeft(yscale))
-        .attr("transform", "translate(" + (padding) + "," + (0) + ")")
+        .attr("transform", "translate(" + (padding-10) + "," + (0) + ")")
 
     bars = bars.enter().append("rect")
         .attr("x", function(d, i){
@@ -107,7 +107,7 @@ function drawGenreBars(genreList){
             return yscale(d.songs.length)
         })
         .attr("width", function(d){
-            return width/10 - padding/2
+            return 50
         })
         .attr("height", function(d, i){
             console.log(d.genre + " " + (height - yscale(d.songs.length)))
@@ -176,8 +176,8 @@ function drawChordDiagram(genreList) {
 
 
 
-    let width = 300
-    let height = 300
+    let width = 960
+    let height = 960
 
     let svg = d3.select("#chord").select("svg")
         .attr("width", width + 100)
@@ -223,19 +223,19 @@ function drawChordDiagram(genreList) {
         .style("fill", function (d) { return color(d.index); })
         .style("stroke", function (d) { return d3.rgb(color(d.index)).darker(); })
         .attr("class", function (d) {
-            return "genre " + topGenres[d.index].replace(" ", "-");
+            return "genre " + topGenres[d.index].replace(" ", "-")
         })
         .attr("d", arc)
         .on("mouseover", function (d) {
             let classes = d3.select(this).attr("class").split(" ");
-            let srcGenre = classes[1];
-            let trgGenre = classes[1];
+            let srcGenre = classes[1]
+            let trgGenre = classes[1]
 
-            d3.selectAll("." + trgGenre).style("opacity", 1.0);
+            d3.selectAll("." + trgGenre).style("opacity", 1.0)
 
         })
         .on("mouseout", function (d) {
-            d3.selectAll(".ribbons").style("opacity", 0.4);
+            d3.selectAll(".ribbons").style("opacity", 0.4)
         })
 
     groupTick = group.append("g")
@@ -272,14 +272,14 @@ function drawChordDiagram(genreList) {
         .style("stroke", function (d) { return d3.rgb(color(d.target.index)).darker(); })
         .on("mouseover", function (d) {
             let classes = d3.select(this).attr("class").split(" ");
-            let srcGenre = classes[1];
-            let trgGenre = classes[2];
+            let srcGenre = classes[1]
+            let trgGenre = classes[2]
 
-            d3.selectAll("." + trgGenre).style("opacity", 1.0);
+            d3.selectAll("." + trgGenre).style("opacity", 1.0)
 
-       })
+        })
         .on("mouseout", function (d) {
-            d3.selectAll(".ribbons").style("opacity", 0.4);
+            d3.selectAll(".ribbons").style("opacity", 0.4)
         })
 
     // Returns an array of tick angles and values for a given group and step.
@@ -291,33 +291,9 @@ function drawChordDiagram(genreList) {
     }
 }
 
-function updateGenreCharts() {
+function updateCharts() {
     d3.json("../data/songs.json", function (error, data) {
         // let limit = document.getElementById('limitSelect').value;
-        drawByGenre(data);
+        drawByGenre(data)
     })
-}
-
-
-function loadGenre() {
-    clearPage();
-    d3.select('#sidebar #outer-list>li:nth-child(2) a').classed('selected', true);
-
-    if(false)
-        addDiv().append('input')
-            .attr('type', "text")
-            .attr('name', "search")
-            .attr('id', "searchentry")
-    addDiv('bars', true)
-    addDiv('chord', true)
-
-    // d3.select('#weekly-limit').append('select')
-    //     .attr('id', 'limitSelect')
-    //     .on("change", updateTimeCharts)
-    //     .selectAll('option').data([10, 25, 50, 200]).enter()
-    //     .append('option')
-    //     .attr('value', d => d)
-    //     .text(d => d)
-
-    updateGenreCharts()
 }

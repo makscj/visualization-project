@@ -135,6 +135,7 @@ function loadStoryLoyalty() {
     d3.select('#ken-3-1').transition()
         .duration(500)
         .style('opacity', 1);
+    
 }
 
 
