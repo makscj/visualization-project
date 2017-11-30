@@ -1,10 +1,10 @@
 let opacity = {
-    default: 0.35,
+    default: 0.2,
     hover: 1.0,
-    rap: 0.5
+    rap: 0.2
 }
 
-function drawByGenre(data) {
+function drawByGenre(data, toggled) {
 
 
     data = data.filter(x => x.song.name != "")
@@ -12,15 +12,9 @@ function drawByGenre(data) {
 
     let totalSongs = new Set(data)
 
-    // let limit = 25
-
-    // data = data.filter(x => x.position <= limit).filter(x => x.name != "")
 
     let genres = Array.from(new Set(data.map(x => x.song.genres).reduceRight((a, b) => a.concat(b), [])))
 
-    // let songIds = Array.from(new Set(data.map(x => x.id)))
-
-    console.log(genres)
 
     let songsPerGenre = {}
 
@@ -49,10 +43,9 @@ function drawByGenre(data) {
 
     let genreLookup = genreList.map(x => x.genre)
 
-    console.log(genreLookup)
 
-    d3.json("data/top200.json", function (error, weekly) {
-        weekly = weekly.filter(x => x.position <= 50)
+    d3.json("/data/top200.json", function (error, weekly) {
+        weekly = weekly.filter(x => x.position <= 50).filter(x => x.name != "")
         for (let song of weekly) {
             let genres = song.genres
             let bGenre = d3.min(genres.map(x => genreLookup.indexOf(x)))
@@ -60,27 +53,17 @@ function drawByGenre(data) {
         }
 
         drawSongsWithGenre(weekly, 50)
-
-
     })
 
+    if(!toggled){
+        drawChordDiagram(genreList)
+        drawGenreBars(genreList)
+    }
+    
 
-
-    // for (let song of data) {
-    //     let genres = song.song.genres
-    //     let bGenre = d3.min(genres.map(x => genreLookup.indexOf(x)))
-    //     song.song.genre = bGenre == undefined ? "" : genreLookup[bGenre]
-    //     // console.log(song.song.name + " " + song.artists.artists[0].name + " " + genreLookup[bGenre] + " " + bGenre)
-    // }
-
-    // console.log(data)
-
-    drawChordDiagram(genreList)
-    drawGenreBars(genreList)
-
-    // drawSongsWithGenre()
 
 }
+
 
 function drawSongsWithGenre(data, limit) {
     a = ["pop", "tropical house", "post-teen pop", "dance pop", "pop rap", "rap", "trap music", "dwn trap", "southern hip hop", "hip hop"]
@@ -91,6 +74,13 @@ function drawSongsWithGenre(data, limit) {
         colors[x] = b[i]
     })
 
+    
+    let isChecked = document.getElementById('displayImage').checked;
+    
+    let shape = isChecked ? "image" : "rect"
+    let oldShape = isChecked ? "rect" : "image"
+
+    
 
     let dates = Array.from(new Set(data.map(x => x.date)))
     let numberOfWeeks = dates.length;
@@ -111,12 +101,15 @@ function drawSongsWithGenre(data, limit) {
         .domain([0, dates.length])
         .range([0, height])
 
-
-    let images = svg.selectAll("rect").data(data);
+    let images = svg.selectAll(oldShape).data([])
     images.exit().remove()
-    images = images.enter().append("rect").merge(images)
 
-    let hideRap = 0.5
+    
+
+    images = svg.selectAll(shape).data(data);
+    images.exit().remove()
+    images = images.enter().append(shape).merge(images)
+
 
 
     // let imgsize = 50;
@@ -125,6 +118,9 @@ function drawSongsWithGenre(data, limit) {
     images
         .style("fill", function(d){
             return colors[d.genre]
+        })
+        .attr("href", function(d){
+            return "/data/images/" + d.id
         })
         .attr("class", function (d) {
             if(d.genres.length > 0){
@@ -142,9 +138,9 @@ function drawSongsWithGenre(data, limit) {
         .attr("width", imgsize)
         .attr("height", imgsize)
         .style("opacity", d => {
-            if(a.indexOf(d.genre) >= 4)
-                return hideRap
-            return 0.5
+            // if(a.indexOf(d.genre) >= 4)
+            //     return opacity.rap
+            return opacity.default
         })
 
     images
@@ -152,17 +148,12 @@ function drawSongsWithGenre(data, limit) {
             images.style("opacity", function (im) {
                 if (im.id == d.id)
                     return opacity.hover
-                if(a.indexOf(im.genre) >= 4)
-                    return opacity.rap
+                // if(a.indexOf(im.genre) >= 4)
+                //     return opacity.rap
                 return opacity.default
             })
-
             let joinedGenres = fixGenres(d.genres).map(x => ".genre."+x+",.bar."+x+",.ribbon."+x).join(",")
-
             d3.selectAll(joinedGenres).style("opacity", opacity.hover)
-
-
-            
 
         })
        
@@ -263,6 +254,7 @@ function drawChordDiagram(genreList) {
     let genreColors = ["0055ff", "39438e", "9ca6f4", "4b5ff4", "aa66ff", "ff0033", "5b271e", "ce4c35", "f4d3cd", "ed9282"]
 
     let chordMatrix = {};
+
 
 
 
@@ -418,10 +410,11 @@ function drawChordDiagram(genreList) {
     }
 }
 
-function updateGenreCharts() {
+function updateGenreCharts(toggled) {
+    
     d3.json("../data/songs.json", function (error, data) {
         // let limit = document.getElementById('limitSelect').value;
-        drawByGenre(data)
+        drawByGenre(data, toggled)
     })
 }
 
@@ -451,5 +444,17 @@ function loadGenre() {
     //     .attr('value', d => d)
     //     .text(d => d)
 
-    updateGenreCharts()
+    d3.select("#toggle")
+        .append("div")
+        .text("Display Album Covers")
+        .append('input')
+        .attr("type", "checkbox")
+        .attr("id", "displayImage")
+        .on("change", toggle)
+
+    updateGenreCharts(false)
+}
+
+function toggle(){
+    updateGenreCharts(true)
 }

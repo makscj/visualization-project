@@ -58,6 +58,7 @@ function clearPage () {
     d3.select('#sidebar .selected').classed('selected', false)
     d3.selectAll('#chart-dim *').remove()
     d3.selectAll('#weekly-limit *').remove()
+    d3.selectAll('#toggle *').remove()
 }
 
 function loadSpotifyPlayer(id) {
