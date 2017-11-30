@@ -44,7 +44,7 @@ function drawByGenre(data, toggled) {
     let genreLookup = genreList.map(x => x.genre)
 
 
-    d3.json("/data/top200.json", function (error, weekly) {
+    d3.json("data/top200.json", function (error, weekly) {
         weekly = weekly.filter(x => x.position <= 50).filter(x => x.name != "")
         for (let song of weekly) {
             let genres = song.genres
@@ -118,7 +118,7 @@ function drawSongsWithGenre(data, limit) {
             return colors[d.genre]
         })
         .attr("href", function(d){
-            return "/data/images/" + d.id
+            return "data/images/" + d.id
         })
         .attr("class", function (d) {
             if(d.genres.length > 0){
@@ -410,7 +410,7 @@ function drawChordDiagram(genreList) {
 
 function updateGenreCharts(toggled) {
     
-    d3.json("../data/songs.json", function (error, data) {
+    d3.json("data/songs.json", function (error, data) {
         // let limit = document.getElementById('limitSelect').value;
         drawByGenre(data, toggled)
     })

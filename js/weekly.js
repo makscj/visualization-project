@@ -49,7 +49,7 @@ function drawTopByWeekGraph(data, limit) {
 
     images
         .attr("href", function (d) {
-            return "../data/images/" + d.id
+            return "data/images/" + d.id
         })
         .attr("class", function (d) {
             return d.id

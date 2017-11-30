@@ -15,8 +15,8 @@ function loadJavascript() {
         // 'script',
         // 'search',
         'starChart',
-        'weekly',
-        'streams'
+        'weekly'
+        // 'streams'
     ]
     let body = d3.select('body')
     for(let s = 0; s < scripts.length; s++)
@@ -133,6 +133,6 @@ String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
 
-loadJavascript()
 loadSidebar()
+loadJavascript()
 computeContentWidth()

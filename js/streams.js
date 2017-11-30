@@ -68,8 +68,8 @@ function drawStreams(weekly, songs){
 
 function updateStreamCharts() {
 
-    d3.json("../data/top200.json", function (error, weekly) {
-        d3.json("../data/songs.json", function (error, songs) {
+    d3.json("data/top200.json", function (error, weekly) {
+        d3.json("data/songs.json", function (error, songs) {
             drawStreams(weekly, songs)
     
         })

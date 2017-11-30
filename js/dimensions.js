@@ -74,7 +74,7 @@ function drawDimensions(data, limit) {
 
     circles
         .attr("id", d => d.id)
-        .attr("href", d => encodeURI("../data/images/" + String(d.id)))//d.album.images[1].url
+        .attr("href", d => encodeURI("data/images/" + String(d.id)))//d.album.images[1].url
         .transition()
         .duration(500)
         .attr("x", function (d) {
@@ -112,7 +112,7 @@ function drawDimensions(data, limit) {
 
 function updateDimensionCharts() {
 
-    d3.json("../data/top200ByDate.json", function (error, data) {
+    d3.json("data/top200ByDate.json", function (error, data) {
         drawDimensions(data, 50)
 
     })
