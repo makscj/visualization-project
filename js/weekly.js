@@ -49,7 +49,7 @@ function drawTopByWeekGraph(data, limit) {
 
     images
         .attr("href", function (d) {
-            return "../data/images/" + d.id
+            return "/data/images/" + d.id
         })
         .attr("class", function (d) {
             return d.id
@@ -87,7 +87,7 @@ function drawTopByWeekGraph(data, limit) {
 }
 
 function updateTimeCharts() {
-    d3.json("data/top200.json", function (error, data) {
+    d3.json("/data/top200.json", function (error, data) {
         let limit = document.getElementById('limitSelect').value;
         drawTopByWeekGraph(data, +limit)
     })
