@@ -386,8 +386,8 @@ function drawChordDiagram(genreList) {
         .attr("class", function (d) {
             return "ribbons " + topGenres[d.source.index].replace(/ /g, "-") + " " + topGenres[d.target.index].replace(/ /g, "-")
         })
-        .style("fill", function (d) { return genreColors[topGenres[d.index]]; })
-        .style("stroke", function (d) { return d3.rgb(genreColors[topGenres[d.index]]).darker(); })
+        .style("fill", function (d) { return genreColors[topGenres[d.target.index]]; })
+        .style("stroke", function (d) { return d3.rgb(genreColors[topGenres[d.target.index]]).darker(); })
         .on("mouseover", function (d) {
             let classes = d3.select(this).attr("class").split(" ");
             let srcGenre = classes[1]
