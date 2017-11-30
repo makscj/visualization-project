@@ -381,8 +381,8 @@ function drawChordDiagram(genreList) {
         .style("stroke", function (d) { return d3.rgb(genreColors[topGenres[d.target.index]]).darker(); })
         .on("mouseover", function (d) {
             let classes = d3.select(this).attr("class").split(" ");
-            let srcGenre = classes[1];
-            let trgGenre = classes[2];
+            let srcGenre = classes[1]
+            let trgGenre = classes[2]
 
             d3.selectAll("." + trgGenre + "." + srcGenre).style("opacity", opacity.hover)
             d3.selectAll(".bar." + trgGenre + ",.bar." + srcGenre).style("opacity", opacity.hover)
@@ -400,6 +400,7 @@ function drawChordDiagram(genreList) {
     }
 }
 
+<<<<<<< HEAD
 function updateGenreCharts(toggled) {
 
     d3.json("data/songs.json", function (error, data) {
@@ -457,4 +458,11 @@ function loadGenre() {
 
 function toggle() {
     updateGenreCharts(true)
+}
+
+function updateCharts() {
+    d3.json("../data/songs.json", function (error, data) {
+        // let limit = document.getElementById('limitSelect').value;
+        drawByGenre(data)
+    })
 }
