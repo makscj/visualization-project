@@ -179,10 +179,15 @@ function drawGenreBars(genreList) {
     let top10 = genreList.filter(x => x.songs.length > 100)
 
 
+<<<<<<< HEAD
     let width = sidebarWidth - 20
     let height = sidebarWidth - 20
+=======
+    let width = 960
+    let height = 960
+>>>>>>> fixed star chart
 
-    let padding = 20
+    let padding = 200
 
     let svg = d3.select("#bars").select("svg")
         .attr("width", width)
@@ -206,7 +211,7 @@ function drawGenreBars(genreList) {
 
     svg.append("g")
         .call(d3.axisLeft(yscale))
-        .attr("transform", "translate(" + (padding) + "," + (0) + ")")
+        .attr("transform", "translate(" + (padding-10) + "," + (0) + ")")
 
     bars = bars.enter().append("rect")
         .attr("class", function (d) {
@@ -218,8 +223,13 @@ function drawGenreBars(genreList) {
         .attr("y", function (d, i) {
             return yscale(d.songs.length)
         })
+<<<<<<< HEAD
         .attr("width", function (d) {
             return width / 10 - padding / 4
+=======
+        .attr("width", function(d){
+            return 50
+>>>>>>> fixed star chart
         })
         .attr("height", function (d, i) {
             return height - yscale(d.songs.length) - 10
@@ -289,8 +299,13 @@ function drawChordDiagram(genreList) {
 
     console.log(sidebarWidth)
 
+<<<<<<< HEAD
     let width = sidebarWidth - 20
     let height = sidebarWidth - 20
+=======
+    let width = 960
+    let height = 960
+>>>>>>> fixed star chart
 
     let svg = d3.select("#chord").select("svg")
         .attr("width", width)
@@ -336,17 +351,32 @@ function drawChordDiagram(genreList) {
         .style("stroke", function (d) { return d3.rgb(genreColors[topGenres[d.index]]).darker(); })
         .style("opacity", opacity.default)
         .attr("class", function (d) {
+<<<<<<< HEAD
             return "genre " + topGenres[d.index].replace(/ /g, "-")
+=======
+            return "genre " + topGenres[d.index].replace(" ", "-")
+>>>>>>> fixed star chart
         })
         .attr("d", arc)
         .on("mouseover", function (d) {
             let classes = d3.select(this).attr("class").split(" ");
             let srcGenre = classes[1]
+<<<<<<< HEAD
             let trgGenre = classes[2]
             d3.selectAll("." + trgGenre + ",." + srcGenre).style("opacity", opacity.hover)
 
         })
         .on("mouseout", resetCharts)
+=======
+            let trgGenre = classes[1]
+
+            d3.selectAll("." + trgGenre).style("opacity", 1.0)
+
+        })
+        .on("mouseout", function (d) {
+            d3.selectAll(".ribbons").style("opacity", 0.4)
+        })
+>>>>>>> fixed star chart
 
     groupTick = group.append("g")
 
@@ -381,13 +411,21 @@ function drawChordDiagram(genreList) {
         .style("stroke", function (d) { return d3.rgb(genreColors[topGenres[d.target.index]]).darker(); })
         .on("mouseover", function (d) {
             let classes = d3.select(this).attr("class").split(" ");
-            let srcGenre = classes[1];
-            let trgGenre = classes[2];
+            let srcGenre = classes[1]
+            let trgGenre = classes[2]
 
+<<<<<<< HEAD
             d3.selectAll("." + trgGenre + "." + srcGenre).style("opacity", opacity.hover)
             d3.selectAll(".bar." + trgGenre + ",.bar." + srcGenre).style("opacity", opacity.hover)
             d3.selectAll(".genre." + trgGenre + ",.genre." + srcGenre).style("opacity", opacity.hover)
 
+=======
+            d3.selectAll("." + trgGenre).style("opacity", 1.0)
+
+        })
+        .on("mouseout", function (d) {
+            d3.selectAll(".ribbons").style("opacity", 0.4)
+>>>>>>> fixed star chart
         })
         .on("mouseout", resetCharts)
 
@@ -400,6 +438,7 @@ function drawChordDiagram(genreList) {
     }
 }
 
+<<<<<<< HEAD
 function updateGenreCharts(toggled) {
 
     d3.json("data/songs.json", function (error, data) {
@@ -458,3 +497,11 @@ function loadGenre() {
 function toggle() {
     updateGenreCharts(true)
 }
+=======
+function updateCharts() {
+    d3.json("../data/songs.json", function (error, data) {
+        // let limit = document.getElementById('limitSelect').value;
+        drawByGenre(data)
+    })
+}
+>>>>>>> fixed star chart
