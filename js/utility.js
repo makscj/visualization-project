@@ -15,8 +15,8 @@ function loadJavascript() {
         // 'script',
         // 'search',
         'starChart',
-        'weekly',
-        'streams'
+        'weekly'
+        // 'streams'
     ]
     let body = d3.select('body')
     for(let s = 0; s < scripts.length; s++)
