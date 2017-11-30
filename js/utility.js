@@ -63,6 +63,7 @@ function clearPage () {
     d3.selectAll('#weekly-limit *').remove()
     d3.selectAll('#toggle *').remove()
     d3.selectAll('#date-select *').remove()
+    d3.selectAll('#side-chart *').remove()
 }
 
 function loadSpotifyPlayer(id, isCompact = false) {

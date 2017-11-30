@@ -63,26 +63,26 @@ function drawByGenre(data, toggled) {
         drawSongsWithGenre(weekly, 50)
     })
 
-    if(!toggled){
+    if (!toggled) {
         drawChordDiagram(genreList)
         drawGenreBars(genreList)
     }
-    
+
 
 
 }
 
 
 function drawSongsWithGenre(data, limit) {
-    
 
-    
+
+
     let isChecked = document.getElementById('displayImage').checked;
-    
+
     let shape = isChecked ? "image" : "rect"
     let oldShape = isChecked ? "rect" : "image"
 
-    
+
 
     let dates = Array.from(new Set(data.map(x => x.date)))
     let numberOfWeeks = dates.length;
@@ -106,7 +106,7 @@ function drawSongsWithGenre(data, limit) {
     let images = svg.selectAll(oldShape).data([])
     images.exit().remove()
 
-    
+
 
     images = svg.selectAll(shape).data(data);
     images.exit().remove()
@@ -116,18 +116,18 @@ function drawSongsWithGenre(data, limit) {
 
 
     images
-        .style("fill", function(d){
+        .style("fill", function (d) {
             return genreColors[d.genre]
         })
-        .attr("href", function(d){
+        .attr("href", function (d) {
             return "data/images/" + d.id
         })
         .attr("class", function (d) {
-            if(d.genres.length > 0){
+            if (d.genres.length > 0) {
                 return "box " + d.id + " " + fixGenres(d.genres).join(" ")
             }
             return "box " + d.id
-            
+
         })
         .attr("x", function (d) {
             return xscale(d.position)
@@ -152,11 +152,11 @@ function drawSongsWithGenre(data, limit) {
                 //     return opacity.rap
                 return opacity.default
             })
-            let joinedGenres = fixGenres(d.genres).map(x => ".genre."+x+",.bar."+x+",.ribbon."+x).join(",")
+            let joinedGenres = fixGenres(d.genres).map(x => ".genre." + x + ",.bar." + x + ",.ribbon." + x).join(",")
             d3.selectAll(joinedGenres).style("opacity", opacity.hover)
 
         })
-       
+
         .on("mouseout", resetCharts)
         .on("click", function (d) {
             console.log(d)
@@ -167,7 +167,7 @@ function drawSongsWithGenre(data, limit) {
 }
 
 
-function fixGenres(genres){
+function fixGenres(genres) {
     return genres.map(x => x.replace(/ /g, "-")).filter(x => x.indexOf("&") == -1)
 }
 
@@ -177,15 +177,6 @@ function drawGenreBars(genreList) {
 
 
     let top10 = genreList.filter(x => x.songs.length > 100)
-
-    // a = ["pop", "tropical house", "post-teen pop", "dance pop", "pop rap", "rap", "trap music", "dwn trap", "southern hip hop", "hip hop"]
-    // let b = ["0055ff", "39438e", "9ca6f4", "4b5ff4", "aa66ff", "ff0033", "5b271e", "ce4c35", "f4d3cd", "ed9282"]
-
-    // let colors = {}
-    // a.forEach((x, i) => {
-    //     colors[x] = b[i]
-    // })
-
 
 
     let width = sidebarWidth - 20
@@ -218,7 +209,7 @@ function drawGenreBars(genreList) {
         .attr("transform", "translate(" + (padding) + "," + (0) + ")")
 
     bars = bars.enter().append("rect")
-        .attr("class", function(d){
+        .attr("class", function (d) {
             return "bar " + d.genre.replace(/ /g, "-")
         })
         .attr("x", function (d, i) {
@@ -324,7 +315,7 @@ function drawChordDiagram(genreList) {
     var ribbon = d3.ribbon()
         .radius(innerRadius);
 
-    
+
 
     var g = svg.append("g")
         .attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")")
@@ -393,9 +384,9 @@ function drawChordDiagram(genreList) {
             let srcGenre = classes[1]
             let trgGenre = classes[2]
 
-            d3.selectAll("." + trgGenre+"." + srcGenre).style("opacity", opacity.hover)
-            d3.selectAll(".bar."+trgGenre + ",.bar."+srcGenre).style("opacity", opacity.hover)
-            d3.selectAll(".genre."+trgGenre + ",.genre."+srcGenre).style("opacity", opacity.hover)
+            d3.selectAll("." + trgGenre + "." + srcGenre).style("opacity", opacity.hover)
+            d3.selectAll(".bar." + trgGenre + ",.bar." + srcGenre).style("opacity", opacity.hover)
+            d3.selectAll(".genre." + trgGenre + ",.genre." + srcGenre).style("opacity", opacity.hover)
 
         })
         .on("mouseout", resetCharts)
@@ -410,7 +401,7 @@ function drawChordDiagram(genreList) {
 }
 
 function updateGenreCharts(toggled) {
-    
+
     d3.json("data/songs.json", function (error, data) {
         // let limit = document.getElementById('limitSelect').value;
         drawByGenre(data, toggled)
@@ -418,7 +409,7 @@ function updateGenreCharts(toggled) {
 }
 
 
-function resetCharts(){
+function resetCharts() {
     d3.selectAll(".ribbons,.box,.genre,.bar").style("opacity", opacity.default)
 }
 
@@ -455,7 +446,7 @@ function loadGenre() {
         .append("div")
         .attr("id", "bars")
         .append("svg")
-    
+
     d3.select("#side-chart")
         .append("div")
         .attr("id", "chord")
@@ -464,6 +455,6 @@ function loadGenre() {
     updateGenreCharts(false)
 }
 
-function toggle(){
+function toggle() {
     updateGenreCharts(true)
 }
