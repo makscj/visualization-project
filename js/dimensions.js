@@ -113,7 +113,6 @@ function drawDimensions(data, limit) {
 function updateDimensionCharts() {
 
     d3.json("../data/top200ByDate.json", function (error, data) {
-        console.log("here we go")
         drawDimensions(data, 50)
 
     })
