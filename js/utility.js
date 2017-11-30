@@ -133,6 +133,9 @@ String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
 
+d3.text("html/sidebar.html", function(text){
+    d3.select("#sidebar").html(text)
+})
 loadJavascript()
-loadSidebar()
+//loadSidebar()
 computeContentWidth()
