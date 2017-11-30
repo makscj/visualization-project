@@ -1,6 +1,7 @@
 
 /* Navigation Bar */
 li.ken-nav-item {
+    color:#828282;
     display: inline;
     list-style: none;
     font-size: 19px;
@@ -19,9 +20,24 @@ div.ken-story p{
 }
 
 li.ken-nav-item:hover {
+    color: white;
     cursor: pointer;
 }
 
 li.nav-selected {
     color: red;
+}
+
+p.ken-story-text {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+img.ken-image {
+    display: block;
+    margin: 0 auto;
+}
+
+p#ken-1-4 {
+    font-size: 50px;
 }
