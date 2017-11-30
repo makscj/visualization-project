@@ -277,7 +277,7 @@ function drawChordDiagram(genreList) {
 
             d3.selectAll("." + trgGenre).style("opacity", 1.0);
 
-        })
+       })
         .on("mouseout", function (d) {
             d3.selectAll(".ribbons").style("opacity", 0.4);
         })
