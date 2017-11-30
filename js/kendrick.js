@@ -87,14 +87,14 @@ function loadStoryDna() {
         .classed('ken-story', true);
     
     storyDiv.append('p')
-        .text("Kendrick released his single HUMBLE. and it topped the charts both weeks.")
+        .text("Kendrick released his single HUMBLE. and it helt the top spot both weeks.")
         .style('opacity', 0)
         .attr('id', 'ken-2-1')
         .classed('ken-story-text', true);
 
     let singleSvg = storyDiv.append('svg');
     d3.json("/data/top200.json", function (error, data) {
-            drawTopByWeekGraphKendrick(data, 140, 160, singleSvg);
+            drawTopByWeekGraphKendrick(data, 14, 16, singleSvg);
     })
     
     storyDiv.append('p')
@@ -105,7 +105,7 @@ function loadStoryDna() {
 
     let releaseSvg = storyDiv.append('svg');
     d3.json("/data/top200.json", function (error, data) {
-            drawTopByWeekGraphKendrick(data, 160, 230, releaseSvg);
+            drawTopByWeekGraphKendrick(data, 16, 23, releaseSvg);
     })
     
       d3.select('#ken-2-1').transition()
@@ -121,6 +121,20 @@ function loadStoryDna() {
 function loadStoryLoyalty() {
     clearStory();
     setNavColoring('#nav-loyalty');
+    let storyDiv = d3.select("#content")
+        .append('div')
+        .attr('id', 'ken-story-3')
+        .classed('ken-story', true);
+    
+    storyDiv.append('p')
+        .text("During Kendrick's nine week run, rap dominated the top charts.")
+        .style('opacity', 0)
+        .attr('id', 'ken-3-1')
+        .classed('ken-story-text', true);
+
+    d3.select('#ken-3-1').transition()
+        .duration(500)
+        .style('opacity', 1);
 }
 
 
@@ -147,13 +161,13 @@ function loadNavigation() {
         .attr('id', 'nav-blood')
         .classed('ken-nav-item', true)
         .classed('nav-selected', true);
-    list.append('li').text('DNA.')
+    list.append('li').text('HUMBLE.')
         .attr('id', 'nav-dna')
         .classed('ken-nav-item', true);
     list.append('li').text('LOYALTY.')
         .attr('id', 'nav-loyalty')
         .classed('ken-nav-item', true);
-    list.append('li').text('HUMBLE.')
+    list.append('li').text('DNA.')
         .attr('id', 'nav-humble')
         .classed('ken-nav-item', true);
     list.append('li').text('LOVE.')
@@ -188,7 +202,7 @@ function clearStory() {
 function drawTopByWeekGraphKendrick(data, start, end, svg) {
 
     data = data.filter(x => x.position <= 10).filter(x => x.name != "");
-    data = data.slice(start, end);
+    data = data.slice(start * 10, end * 10);
     let dates = Array.from(new Set(data.map(x => x.date)));
     let numberOfWeeks = dates.length;
     let width = contentWidth;
