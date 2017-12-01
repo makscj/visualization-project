@@ -109,7 +109,7 @@ function updateTimeCharts() {
 
 function loadTime() {
     clearPage();
-    d3.select('#sidebar #outer-list>li:nth-child(1) a').classed('selected', true)
+    d3.select('#sidebar #outer-list>li:nth-child(2) a').classed('selected', true)
 
     if(false)
         addDiv().append('input')
@@ -131,4 +131,4 @@ function loadTime() {
     updateTimeCharts()
 }
 
-loadTime()
+// loadTime()

@@ -4,30 +4,22 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="../css/sidebar.css">
+    <link rel='stylesheet' href='../css/styles.css'>
     <link rel='stylesheet' href='../css/kendrick.css'>
 </head>
 
-<body>
+<body onresize='windowResized()'>
 
     <div id="wrapper">
-        <div id="sidebar-wrapper">
+        <div id="sidebar"> 
 
         </div>
-        <div id="page-content-wrapper">
-            <div class="page-content">
-                <div class="flexible-container">
-                </div>
-            </div>
+
+        <div id="content">
         </div>
     </div>
-
-    <script type="text/javascript" src="../js/utility.js"></script>
-    <script type="text/javascript" src="../js/shared.js"></script>
-    <script type="text/javascript" src="../js/dimensions.js"></script>
+   
 
 </body>
 

@@ -142,7 +142,7 @@ function makeDimensionSelectors() {
 
 function loadDimensions() {
     clearPage();
-    d3.select('#sidebar #outer-list>li:nth-child(3) a').classed('selected', true)
+    d3.select('#sidebar #outer-list>li:nth-child(4) a').classed('selected', true)
 
     if (false)
         addDiv().append('input')

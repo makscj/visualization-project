@@ -1,3 +1,5 @@
+sidebarWidth = 0
+
 function addDiv(id, addSVG) {
     let div = d3.select('#content').append('div')
     if(id != null)
@@ -15,7 +17,8 @@ function loadJavascript() {
         // 'script',
         // 'search',
         'starChart',
-        'weekly'
+        'weekly',
+        'list'
         // 'streams'
     ]
     let body = d3.select('body')
@@ -27,7 +30,7 @@ function loadJavascript() {
 
 function loadSidebar() {
     d3.text("html/sidebar.html", function(text){
-        d3.select("#sidebar").html(text)
+        d3.select("#sidebar").html(text);
     })
 }
 
@@ -40,7 +43,7 @@ function computeContentWidth() {
 
 function windowResized() {
     computeContentWidth()
-    let selected = d3.select('#sidebar .selected').node().click()
+    //let selected = d3.select('#sidebar .selected').node().click()
     // TODO implement update instead of click given time
     /*
     let update = selected.attr('update')
@@ -61,9 +64,10 @@ function clearPage () {
     d3.selectAll('#weekly-limit *').remove()
     d3.selectAll('#toggle *').remove()
     d3.selectAll('#date-select *').remove()
+    d3.selectAll('#side-chart *').remove()
 }
 
-function loadSpotifyPlayer(id) {
+function loadSpotifyPlayer(id, isCompact = false) {
     let player = d3.select("#spotify-player")
     let bounds = player.node().getBoundingClientRect()
 
@@ -77,6 +81,10 @@ function loadSpotifyPlayer(id) {
     let height = bounds.width * 1.1
     if(height < 300)
         height = 300
+    
+    //todo fix it cause I don't care
+    if(isCompact)
+        height = 80
 
     player
         .attr("width", bounds.width)
