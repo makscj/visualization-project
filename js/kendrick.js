@@ -50,7 +50,7 @@ function loadStoryBlood() {
         .classed('ken-story-text', true);
 
     storyDiv.append('p')
-        .text("✨🏆✨")
+        .text("The single HUMBLE. was streamed over 600 million times.")
         .style('opacity', 0)
         .attr('id', 'ken-1-4')
         .classed('ken-story-text', true);
@@ -304,7 +304,12 @@ function drawTopByWeekGraphKendrick(data, start, end, svg) {
         .attr("height", imgsize)
         .transition()
         .duration(1000)
-        .style("opacity", 1)
+        .style("opacity", function(d) {
+            if (d.album.id == "4eLPsYPBmXABThSJ821sqY") {
+                return 1;
+            }
+            return 0.5;
+        })
 }
 
 function drawSongsWithGenreKendrick(data, start, end) {
