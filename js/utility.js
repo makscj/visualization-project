@@ -94,6 +94,74 @@ function loadSpotifyPlayer(id, isCompact = false) {
         .attr("src", "https://open.spotify.com/embed?uri=spotify:track:" + id)
 }
 
+function displaySongStatsInSidebar(e, v, d) {
+    d3.select('#song-stats').html('');
+    let bounds = d3.select('#song-stats')
+        .node().getBoundingClientRect();
+    let barBounds = bounds.width * 0.75;
+
+    let xScale = d3.scaleLinear()
+        .domain([0, 1])
+        .range([0, barBounds]);
+
+    let colorScale = d3.scaleLinear()
+        .domain([0, 1])
+        .range(["#FAEB0A", "#FA630A"]);
+
+    let statsSvg = d3.select("#song-stats")
+        .append('svg')
+        .attr("width", bounds.width);
+
+    // Energy
+    let label = statsSvg.append('g')
+        .append('text')
+        .attr('transform', 'translate(0,30)')
+        .text("Energy: ");
+    let rectX = label.node().getBoundingClientRect().width + 7;
+    let rectY = label.node().getBoundingClientRect().height + 3;
+    statsSvg.append('rect')
+        .attr('transform', 'translate(' + rectX 
+            + ',' + rectY + ')')
+        .attr("height", 10)
+        .attr("width", 0)
+        .attr("fill", colorScale(e))
+        .transition()
+        .duration(500)
+        .attr("width", xScale(e));
+
+    // Valence
+    label = statsSvg.append('g')
+        .append('text')
+        .attr('transform', 'translate(0,60)')
+        .text("Valence: ");
+    rectY = label.node().getBoundingClientRect().height + 33;
+    statsSvg.append('rect')
+        .attr('transform', 'translate(' + rectX 
+            + ',' + rectY + ')')
+        .attr("height", 10)
+        .attr("width", 0)
+        .attr("fill", colorScale(v))
+        .transition()
+        .duration(500)
+        .attr("width", xScale(v));
+    
+    // Danceability
+    label = statsSvg.append('g')
+    .append('text')
+    .attr('transform', 'translate(0,90)')
+    .text("Dancy: ");
+    rectY = label.node().getBoundingClientRect().height + 63;
+    statsSvg.append('rect')
+        .attr('transform', 'translate(' + rectX 
+            + ',' + rectY + ')')
+        .attr("height", 10)
+        .attr("width", 0)
+        .attr("fill", colorScale(d))
+        .transition()
+        .duration(500)
+        .attr("width", xScale(d));
+}
+
 function download(text, name) {
     var a = document.createElement("a");
     var file = new Blob([text], { type: "text/plain" });
