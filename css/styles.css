@@ -57,3 +57,22 @@ line, path {
 .song {
     font-weight: bold;
 }
+
+g.features {
+    cursor: default;
+}
+
+.hover-list-item {
+    opacity: 0.6;
+    cursor: pointer;
+}
+
+div#song-stats {
+    margin-top: 10px;
+    margin-left: 5px;
+    text-align: center;
+}
+
+.hover-cursor {
+    cursor: pointer;
+}

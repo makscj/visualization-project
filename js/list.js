@@ -16,6 +16,7 @@ function drawList(data, limit) {
     let hei = oneEm * 1.5 * numRows
     svg.attr("width", svgWidth)
     svg.attr("height", (hei + marg) * data.length)
+    svg.classed("hover-cursor", true)
 
     console.log(svgWidth / hei)
 
@@ -33,13 +34,26 @@ function drawList(data, limit) {
         .append("g")
         .attr('transform', d => 'translate(0, ' + (i++ * (hei + marg)) + ')')
         .attr('width', svgWidth)
+        .on('mouseover', function() {
+            d3.select(this).select('.list-rect')
+                .classed('hover-list-item', true);
+        })
+        .on('mouseout', function() {
+            d3.select(this).select('.list-rect')
+                .classed('hover-list-item', false);
+        })
+        .on("click", function (d) {
+            loadSpotifyPlayer(d.id);
+            displaySongStatsInSidebar(d.song.features.energy,
+                d.song.features.valence, d.song.features.danceability);
+        });
 
     rows.append('rect')
+        .classed('list-rect', true)
         .attr('width', svgWidth + oneEm)
         .attr('height', hei + oneEm)
         .attr('x', -oneEm)
         .attr('y', -oneEm * 1.5)
-
 
     let cells = rows.selectAll("g")
         .data(function (row) {
@@ -102,6 +116,19 @@ function drawList(data, limit) {
         .x(d => miniPlotX(dates.indexOf(d.date)))
         .y(d => miniPlotY(+d.position))
 
+    cent.filter(d => d.type == "chart")
+        .append('g')
+        .attr('transform', function (d) {
+
+            return 'translate(' + (5 * hei + oneEm / 2) + ', -' + oneEm + ')'
+        })
+        .append('rect')
+        .attr('width', (horizontalBoxes - 6) * hei - 3 * oneEm)
+        .attr('height', hei + 5)
+        .attr('rx', 20)
+        .attr('ry', 20)
+        .attr('fill', '#222222')
+        .attr('transform', 'translate(3, -3)');
 
     cent.filter(d => d.type == "chart")
         .append('g')
@@ -130,6 +157,24 @@ function drawList(data, limit) {
     //     .attr("y", 0)
     //     .attr("width", hei)
     //     .attr("height", hei)
+    
+    cent.filter(d => d.type == 'features')
+        .append('g')
+        .attr('transform', 'translate(' + ((horizontalBoxes - 1) * hei + oneEm / 2) + ', -' + oneEm + ')')
+        .attr('width', hei)
+        .attr('height', hei)
+        .each(function (d, i) {
+            let svg = d3.select(this);
+            let hei = oneEm * 1.5 * numRows;
+            svg.append('rect')
+                .classed('star-chart-background', true)
+                .attr('width', hei + 5)
+                .attr('height', hei + 5)
+                .attr('rx', 20)
+                .attr('ry', 20)
+                .attr('fill', '#222222')
+                .attr('transform', 'translate(3, -4)');
+        });
 
     let r = 5
     let starWidth = hei
@@ -143,9 +188,9 @@ function drawList(data, limit) {
             let svg = d3.select(this)
             let v = d.value
             let data = {
-                'D': v.danceability,
-                'V': v.valence,
-                'E': v.energy
+                'Dancy': v.danceability,
+                'Valence': v.valence,
+                'Energy': v.energy
                 // 'P': v.popularity
                 // 'L' : v.liveness,
                 // 'I' : v.instrumentalness
