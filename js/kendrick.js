@@ -440,5 +440,17 @@ function drawDimensionsKendrick(data, limit) {
             .transition()
             .duration(1000)
             .style("opacity", 1);
-    
+        
+        circles.on('mouseover', function(d) {
+           chart.append('text')
+                .attr('id', 'ken-dim-label')
+                .attr('x', 5)
+                .attr('y', 20)
+                .text(d.name);
+        });
+
+        circles.on('mouseout', function(d) {
+            console.log('out');
+            chart.select('#ken-dim-label').remove();
+        });
 }
