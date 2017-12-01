@@ -182,7 +182,7 @@ function drawGenreBars(genreList) {
     let width = sidebarWidth - 20
     let height = sidebarWidth - 20
 
-    let padding = 20
+    let padding = 200
 
     let svg = d3.select("#bars").select("svg")
         .attr("width", width)
@@ -206,7 +206,7 @@ function drawGenreBars(genreList) {
 
     svg.append("g")
         .call(d3.axisLeft(yscale))
-        .attr("transform", "translate(" + (padding) + "," + (0) + ")")
+        .attr("transform", "translate(" + (padding-10) + "," + (0) + ")")
 
     bars = bars.enter().append("rect")
         .attr("class", function (d) {
@@ -289,8 +289,8 @@ function drawChordDiagram(genreList) {
 
     console.log(sidebarWidth)
 
-    let width = sidebarWidth - 20
-    let height = sidebarWidth - 20
+    let width = 300;
+    let height = 300;
 
     let svg = d3.select("#chord").select("svg")
         .attr("width", width)
@@ -415,7 +415,7 @@ function resetCharts() {
 
 function loadGenre() {
     clearPage();
-    d3.select('#sidebar #outer-list>li:nth-child(2) a').classed('selected', true)
+    d3.select('#sidebar #outer-list>li:nth-child(2) a').classed('selected', true);
 
     if (false)
         addDiv().append('input')
