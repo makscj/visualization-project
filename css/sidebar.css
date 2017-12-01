@@ -1,10 +1,10 @@
 #sidebar {
     height: 100%;
     left: 0px;
-    min-width: 16em;
     padding: 0em 1em;
     position: fixed;
     top: 0px;
+    width: 16em;
 
     overflow-y: auto;
     transition: all 0.4s ease 0s;

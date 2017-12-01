@@ -1,5 +1,3 @@
-sidebarWidth = 0
-
 function addDiv(id, addSVG) {
     let div = d3.select('#content').append('div')
     if(id != null)
@@ -14,6 +12,7 @@ function loadJavascript() {
         'dimensions',
         // 'features',
         'genre',
+        'kendrick',
         // 'script',
         // 'search',
         'starChart',
@@ -43,7 +42,7 @@ function computeContentWidth() {
 
 function windowResized() {
     computeContentWidth()
-    //let selected = d3.select('#sidebar .selected').node().click()
+    let selected = d3.select('#sidebar .selected').node().click()
     // TODO implement update instead of click given time
     /*
     let update = selected.attr('update')

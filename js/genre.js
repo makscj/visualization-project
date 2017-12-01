@@ -198,10 +198,10 @@ function drawGenreBars(genreList) {
     let top10 = genreList.filter(x => x.songs.length > 100)
 
 
-    let width = sidebarWidth - 20
-    let height = sidebarWidth - 20
+    let width = sidebarWidth - 2 * oneEm
+    let height = sidebarWidth - 2 * oneEm
 
-    let padding = 20
+    let padding = oneEm * 2
 
     let svg = d3.select("#bars").select("svg")
         .attr("width", width)
@@ -306,17 +306,15 @@ function drawChordDiagram(genreList) {
     }
 
 
-    console.log(sidebarWidth)
-
-    let width = sidebarWidth - 20
-    let height = sidebarWidth - 20
+    let width = sidebarWidth - 2 * oneEm
+    let height = sidebarWidth - 2 * oneEm
 
     let svg = d3.select("#chord").select("svg")
         .attr("width", width)
         .attr("height", height)
 
-    let outerRadius = Math.min(width, height) * 0.5 - 40
-    let innerRadius = outerRadius - 30;
+    let outerRadius = Math.min(width, height) * 0.5 - 2 * oneEm
+    let innerRadius = outerRadius - 2 * oneEm
 
     var chord = d3.chord()
         .padAngle(0.05)
