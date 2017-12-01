@@ -123,7 +123,7 @@ function drawList(data, limit) {
             return 'translate(' + (5 * hei + oneEm / 2) + ', -' + oneEm + ')'
         })
         .append('rect')
-        .attr('width', 6.3 * hei)
+        .attr('width', (horizontalBoxes - 6) * hei - 3 * oneEm)
         .attr('height', hei + 5)
         .attr('rx', 20)
         .attr('ry', 20)
