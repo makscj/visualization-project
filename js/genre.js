@@ -400,7 +400,6 @@ function drawChordDiagram(genreList) {
     }
 }
 
-<<<<<<< HEAD
 function updateGenreCharts(toggled) {
 
     d3.json("data/songs.json", function (error, data) {
