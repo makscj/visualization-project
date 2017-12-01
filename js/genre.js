@@ -182,7 +182,7 @@ function drawGenreBars(genreList) {
     let width = sidebarWidth - 20
     let height = sidebarWidth - 20
 
-    let padding = 200
+    let padding = 20
 
     let svg = d3.select("#bars").select("svg")
         .attr("width", width)
@@ -206,7 +206,7 @@ function drawGenreBars(genreList) {
 
     svg.append("g")
         .call(d3.axisLeft(yscale))
-        .attr("transform", "translate(" + (padding-10) + "," + (0) + ")")
+        .attr("transform", "translate(" + (padding) + "," + (0) + ")")
 
     bars = bars.enter().append("rect")
         .attr("class", function (d) {
@@ -415,7 +415,7 @@ function resetCharts() {
 
 function loadGenre() {
     clearPage();
-    d3.select('#sidebar #outer-list>li:nth-child(2) a').classed('selected', true);
+    d3.select('#sidebar #outer-list>li:nth-child(2) a').classed('selected', true)
 
     if (false)
         addDiv().append('input')
@@ -457,11 +457,4 @@ function loadGenre() {
 
 function toggle() {
     updateGenreCharts(true)
-}
-
-function updateCharts() {
-    d3.json("../data/songs.json", function (error, data) {
-        // let limit = document.getElementById('limitSelect').value;
-        drawByGenre(data)
-    })
 }
