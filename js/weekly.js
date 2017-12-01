@@ -45,13 +45,15 @@ function drawTopByWeekGraph(data, limit) {
         .range([topLabelHeight, height])
 
     svg.selectAll('text').remove()
-    for(let i = 1; i <= limit; i++) {
+    for(let i = 0; i <= limit; i += 5) {
+        if(i == 0) i++
         let x = xscale(i) + imgsize / 2
         if(x > 9)
             x -= oneEm / 2
         svg.append('text')
             .text(i)
             .attr('transform', 'translate(' + x + ', ' + (topLabelHeight / 2) + ')')
+        if(i == 1) i--
     }
 
     let rows = svg.selectAll('g').data(dat)
@@ -124,7 +126,7 @@ function loadTime() {
         .append('select')
         .attr('id', 'limitSelect')
         .on("change", updateTimeCharts)
-        .selectAll('option').data([10, 25, 50, 200]).enter()
+        .selectAll('option').data([10, 20, 30, 40, 50]).enter()
         .append('option')
         .attr('value', d => d)
         .text(d => d)
