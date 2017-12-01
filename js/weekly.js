@@ -68,19 +68,20 @@ function drawTopByWeekGraph(data, limit) {
     images = images.enter().append("image").merge(images)
 
     images
+        .style("opacity", 0)
         .attr("href", function (d) {
             return "data/images/" + d.id
         })
         .attr("class", function (d) {
             return d.id
         })
-        .transition()
-        .duration(500)
         .attr("x", function (d) {
             return xscale(d.position)
         })
         .attr("width", imgsize)
         .attr("height", imgsize)
+        .transition()
+        .duration(300)
         .style("opacity", .5)
 
     images
