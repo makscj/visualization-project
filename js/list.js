@@ -50,7 +50,7 @@ function drawList(data, limit) {
                 { type: "features", value: row.song.features },
                 { type: "img", value: "data/images/" + row.id, id: row.id },
                 { type: "chart", value: row.chart },
-                { type: "streams", value: "Streams: " + d3.sum(row.chart, x => +x.streams), translate: [oneEm * 2 + imgSize, 2*hei/numRows]}
+                { type: "streams", value: "Streams: " + d3.sum(row.chart, x => +x.streams).toLocaleString(), translate: [oneEm * 2 + imgSize, 2*hei/numRows]}
             ]
         })
 
