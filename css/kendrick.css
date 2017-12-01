@@ -41,3 +41,23 @@ img.ken-image {
 p#ken-1-4 {
     font-size: 50px;
 }
+
+.ken-story {
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+div#ken-story-4 {
+    margin-left: 80px;
+}
+
+div#ken-story-5 {
+    font-size: 19px;
+    text-align:center;
+    width:100%;
+}
+
+a#ken-5-3 {
+    color: white;
+    text-align: center;
+    text-decoration: none;
+}

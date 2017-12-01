@@ -48,14 +48,13 @@ function drawTopByWeekGraph(data, limit) {
 
 
     images
+        .style("opacity", 0)
         .attr("href", function (d) {
             return "data/images/" + d.id
         })
         .attr("class", function (d) {
             return d.id
         })
-        .transition()
-        .duration(500)
         .attr("x", function (d) {
             return xscale(d.position)
             // return xscale(d.features[xdim])
@@ -65,6 +64,8 @@ function drawTopByWeekGraph(data, limit) {
         })
         .attr("width", imgsize)
         .attr("height", imgsize)
+        .transition()
+        .duration(300)
         .style("opacity", .5)
 
     images
