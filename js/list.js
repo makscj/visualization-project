@@ -127,21 +127,26 @@ function drawList(data, limit) {
         .domain([1, 200])
         .range([0, hei])
 
+    //Slightly smaller scale for y axis
+    let yAxisPlot = d3.scaleLog()
+        .domain([1, 200])
+        .range([oneEm/4, hei - oneEm/4])
+
     let miniPlotFn = d3.line()
         .x(d => miniPlotX(dates.indexOf(d.date)))
         .y(d => miniPlotY(+d.position))
 
-    cent.filter(d => d.type == "chart")
+    let miniChart = cent.filter(d => d.type == "chart")
         .append('g')
         .attr('transform', function (d) {
 
-            return 'translate(' + (5 * hei + oneEm / 2) + ', -' + oneEm + ')'
+            return 'translate(' + (5 * hei + oneEm / 2 - 5) + ', -' + oneEm + ')'
         })
         .append('rect')
-        .attr('width', (horizontalBoxes - 6) * hei - 3 * oneEm)
+        .attr('width', (horizontalBoxes - 6) * hei - 3 * oneEm + 5)
         .attr('height', hei + 5)
-        .attr('rx', 20)
-        .attr('ry', 20)
+        .attr('rx', 0)
+        .attr('ry', 0)
         .attr('fill', '#222222')
         .attr('transform', 'translate(3, -3)');
 
@@ -157,6 +162,21 @@ function drawList(data, limit) {
         .style("stroke", "#1ED760")
         .style("stroke-width", 2)
         .style("fill", "none");
+
+    console.log(miniChart)
+
+    d3.selectAll('.chart')
+        .append('g')
+        .attr("transform", 'translate(' + .15*oneEm + ',' + 0 + ')')
+        .call(d3.axisLeft(yAxisPlot)
+                .tickValues([1,10,50,200])
+                .tickFormat(d3.format("1d"))
+                .tickSize(-3))
+        .selectAll("text")
+        .style("text-anchor", "start"); //Left align the axis values
+
+    d3.selectAll('.chart .domain').remove() //Remove the vertical line
+    d3.selectAll('.chart line').remove() // Remove the tick lines
 
 
     // cent.filter(d => d.type == "features")
