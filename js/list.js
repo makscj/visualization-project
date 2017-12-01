@@ -4,9 +4,24 @@ function drawList(data, limit) {
 
     data = data.filter(x => x.chart.some(x => +x.position <= limit)).filter(x => x.song.name != "")
 
-    console.log(data)
+    console.log(data);
 
-    console.log(oneEm)
+    let sortDirection = 1;
+
+    let sortFunctions = {
+        "Artist" : (x,y) => compareStrings(x.artists.artists[0].name,y.artists.artists[0].name, sortDirection),
+        "Song" : (x,y) => compareStrings(x.song.name,y.artists.artists[0].name, sortDirection),
+        "Streams" : (x,y) => sortDirection*(d3.sum(y.chart, z => +z.streams) - d3.sum(x.chart, z => +z.streams)),
+        "Position" : (x,y) => sortDirection*(d3.min(x.chart, z => +z.position) - d3.min(y.chart, z => +z.position)),
+        "Weeks" : (x,y) => sortDirection*(y.chart.length - x.chart.length),
+        "Danceability" : (x,y) => sortDirection*(y.song.features.danceability - x.song.features.danceability),
+        "Valence" : (x,y) => sortDirection*(y.song.features.valence - x.song.features.valence),
+        "Energy" : (x,y) => sortDirection*(y.song.features.energy - x.song.features.energy)
+    }
+
+    data.sort(sortFunctions["Streams"])
+
+
 
     let svg = d3.select("#canvas svg")
 

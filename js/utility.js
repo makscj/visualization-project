@@ -210,6 +210,19 @@ String.prototype.toProperCase = function () {
     return this.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 };
 
+function compareStrings(str1, str2, d = 1){
+    var s1 = str1.toUpperCase();
+    var s2 = str2.toUpperCase();
+    if (s1 < s2) {
+        return d*-1;
+      }
+      if (s1 > s2) {
+        return d*1;
+      }
+      // strings must be equal
+      return 0;
+}
+
 loadSidebar()
 loadJavascript()
 computeContentWidth()

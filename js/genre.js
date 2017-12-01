@@ -4,8 +4,27 @@ let opacity = {
     rap: 0.2
 }
 
-let listTopGenres = ["pop", "tropical house", "post-teen pop", "dance pop", "pop rap", "rap", "trap music", "dwn trap", "southern hip hop", "hip hop"]
-let listTopGenreColors = ["0055ff", "39438e", "9ca6f4", "4b5ff4", "aa66ff", "ff0033", "5b271e", "ce4c35", "f4d3cd", "ed9282"]
+let listTopGenres = ["pop",
+                    "tropical house", 
+                    "post-teen pop",
+                    "dance pop", 
+                    "pop rap", 
+                    "rap", //
+                    "trap music", 
+                    "dwn trap", 
+                    "southern hip hop", 
+                    "hip hop"]
+let listTopGenreColors = 
+                    ["0055ff", 
+                    "39438e", 
+                    "9ca6f4", 
+                    "4b5ff4", 
+                    "aa66ff", 
+                    "FF3333", // rap
+                    "990000", 
+                    "cc0052", 
+                    "ff5050", 
+                    "ff531a"]
 
 let genreColors = {}
 listTopGenres.forEach((x, i) => {
