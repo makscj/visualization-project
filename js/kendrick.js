@@ -73,9 +73,9 @@ function loadStoryBlood() {
 }
 
 
-function loadStoryDna() {
+function loadStoryHumble() {
     clearStory();
-    setNavColoring('#nav-dna');
+    setNavColoring('#nav-humble');
     let storyDiv = d3.select("#content")
         .append('div')
         .attr('id', 'ken-story-2')
@@ -141,9 +141,9 @@ function loadStoryLoyalty() {
 }
 
 
-function loadStoryHumble() {
+function loadStoryDna() {
     clearStory();
-    setNavColoring('#nav-humble');
+    setNavColoring('#nav-dna');
     let storyDiv = d3.select("#content")
         .append('div')
         .attr('id', 'ken-story-4')
@@ -174,7 +174,6 @@ function loadStoryHumble() {
 function loadStoryLove() {
     clearStory();
     setNavColoring('#nav-love');
-    // <iframe width="560" height="315" src="https://www.youtube.com/embed/D4sMeX66tis?rel=0" frameborder="0" allowfullscreen></iframe>
     let storyDiv = d3.select("#content")
         .append('div')
         .attr('id', 'ken-story-5')
@@ -428,7 +427,7 @@ function drawDimensionsKendrick(data, limit) {
         circles
             .style("opacity", 0)
             .attr("id", d => d.id)
-            .attr("href", d => encodeURI("data/images/" + String(d.id)))//d.album.images[1].url
+            .attr("href", d => encodeURI("/data/images/" + String(d.id)))
             .attr("x", function (d) {
                 return xscale(d.features[xdim])
             })
@@ -450,7 +449,6 @@ function drawDimensionsKendrick(data, limit) {
         });
 
         circles.on('mouseout', function(d) {
-            console.log('out');
             chart.select('#ken-dim-label').remove();
         });
 }
