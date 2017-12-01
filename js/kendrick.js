@@ -41,7 +41,7 @@ function loadStoryBlood() {
         .attr('id', 'ken-1-1')
         .classed('ken-story-text', true);
 
-    storyDiv.append('img').attr('src', "../public/images/damn-album-cover.jpg")
+    storyDiv.append('img').attr('src', "public/images/damn-album-cover.jpg")
         .style('opacity', 0)
         .attr('width', 300)
         .attr('height', 300)
