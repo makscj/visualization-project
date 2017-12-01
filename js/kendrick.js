@@ -1,6 +1,6 @@
 function loadKendrick() {
     clearPage();
-    d3.select('#sidebar #outer-list>li:nth-child(3) a').classed('selected', true);
+    d3.select('#sidebar #outer-list>li:nth-child(5) a').classed('selected', true);
     loadSpotifyPlayerKendrick();
     loadNavigation();
 
@@ -131,6 +131,13 @@ function loadStoryLoyalty() {
         .style('opacity', 0)
         .attr('id', 'ken-3-1')
         .classed('ken-story-text', true);
+    
+    storyDiv.append('svg')
+        .classed("ken-rap-plot", true);
+    d3.json("data/top200.json", function (error, data) {
+            drawSongsWithGenreKendrick(data, 14, 23);
+    })
+    
 
     d3.select('#ken-3-1').transition()
         .duration(500)
@@ -245,4 +252,53 @@ function drawTopByWeekGraphKendrick(data, start, end, svg) {
         .transition()
         .duration(1000)
         .style("opacity", 1)
+}
+
+function drawSongsWithGenreKendrick(data, start, end) {
+    let shape = "image";
+    data = data.filter(x => x.position <= 20).filter(x => x.name != "");
+    data = data.slice(start * 20, end * 20);
+    console.log(data);
+    let dates = Array.from(new Set(data.map(x => x.date)));
+    console.log(dates);
+    let numberOfWeeks = dates.length;
+    let svg = d3.select(".ken-rap-plot");
+    let width = contentWidth;
+    let imgsize = Math.ceil(width / (20 + 1)) - 1;
+    let height = (imgsize + 1) * numberOfWeeks;
+
+    svg.attr("height", height)
+       .attr("width", width);
+
+    let xscale = d3.scaleLinear()
+        .domain([1, 20])
+        .range([0, width - imgsize]);
+    let yscale = d3.scaleLinear()
+        .domain([0, 9])
+        .range([0, height]);
+
+    let images = svg.selectAll('image').data([]);
+    images.exit().remove();
+    images = svg.selectAll(shape).data(data);
+    images.exit().remove();
+    images = images.enter().append(shape).merge(images);
+
+    images
+        .attr("href", function (d) {
+            return "/data/images/" + d.id
+        })
+        .attr("x", function (d) {
+            return xscale(d.position);
+        })
+        .attr("y", function (d) {
+            return yscale(dates.indexOf(d.date))
+        })
+        .attr("width", imgsize)
+        .attr("height", imgsize)
+        .style("opacity", function(d) {
+            if (d.genres.includes("rap")) {
+                return 1;
+            }
+            return 0.05;
+        });
 }

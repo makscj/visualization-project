@@ -65,6 +65,7 @@ function clearPage () {
     d3.selectAll('#toggle *').remove()
     d3.selectAll('#date-select *').remove()
     d3.selectAll('#side-chart *').remove()
+    d3.selectAll('#song-stats *').remove();
 }
 
 function loadSpotifyPlayer(id, isCompact = false) {
