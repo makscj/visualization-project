@@ -415,7 +415,7 @@ function resetCharts() {
 
 function loadGenre() {
     clearPage();
-    d3.select('#sidebar #outer-list>li:nth-child(2) a').classed('selected', true)
+    d3.select('#sidebar #outer-list>li:nth-child(3) a').classed('selected', true)
 
     if (false)
         addDiv().append('input')
