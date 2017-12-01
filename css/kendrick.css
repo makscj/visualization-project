@@ -1,14 +1,17 @@
 
 /* Navigation Bar */
-li.ken-nav-item {
+.ken-nav-item {
     color:#828282;
-    display: inline;
-    list-style: none;
     font-size: 19px;
-    margin-right: 5em;}
+}
+
+.ken-nav-list li {
+    display: inline;
+}
 
 ul.ken-nav-list {
-    padding-left: 5em;
+    list-style: none;
+    padding: 0;
 }
 
 #ken-navigation {
@@ -19,12 +22,12 @@ div.ken-story p{
     font-size: 20px;
 }
 
-li.ken-nav-item:hover {
+.ken-nav-item:hover {
     color: white;
     cursor: pointer;
 }
 
-li.nav-selected {
+.nav-selected {
     color: red;
 }
 

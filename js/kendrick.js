@@ -4,11 +4,6 @@ function loadKendrick() {
     loadSpotifyPlayerKendrick();
     loadNavigation();
 
-    d3.select('#nav-blood').on('click', this.loadStoryBlood);
-    d3.select('#nav-dna').on('click', this.loadStoryDna);
-    d3.select('#nav-loyalty').on('click', this.loadStoryLoyalty);
-    d3.select('#nav-humble').on('click', this.loadStoryHumble);
-    d3.select('#nav-love').on('click', this.loadStoryLove);
 }
 
 
@@ -229,31 +224,25 @@ function loadNavigation() {
         .attr('id', 'ken-navigation')
         .style('opacity', 0);
     
-    let list = navigationDiv.append('ul').classed('ken-nav-list', true);
-    list.append('li').text('BLOOD.')
-        .attr('id', 'nav-blood')
+    let dat = ['blood', 'humble', 'loyalty', 'dna', 'love']
+    let list = navigationDiv
+        .append('ul')
+        .classed('ken-nav-list', true)
+        .selectAll('li')
+        .data(dat)
+    list.enter().append('li')
+        .style('padding-left', (contentWidth - oneEm * 21.5) / 6 + 'px')
+        .append('a')
+        .attr('id', d => 'nav-' + d)
+        .text(d => d.toUpperCase() + '.')
         .classed('ken-nav-item', true)
-        .classed('nav-selected', true);
-    list.append('li').text('HUMBLE.')
-        .attr('id', 'nav-dna')
-        .classed('ken-nav-item', true);
-    list.append('li').text('LOYALTY.')
-        .attr('id', 'nav-loyalty')
-        .classed('ken-nav-item', true);
-    list.append('li').text('DNA.')
-        .attr('id', 'nav-humble')
-        .classed('ken-nav-item', true);
-    list.append('li').text('LOVE.')
-        .attr('id', 'nav-love')
-        .classed('ken-nav-item', true);
+        .on('click', d => window['loadStory' + d.toProperCase()]())
 
     d3.select("#ken-navigation")
         .transition()
         .duration(1000)
         .style('opacity', 1)
-        .on('end', function() {
-            this.loadStoryBlood();
-        }.bind(this));
+        .on('end', loadStoryBlood())
 }
 
 
