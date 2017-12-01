@@ -93,7 +93,7 @@ function loadStoryDna() {
         .classed('ken-story-text', true);
 
     let singleSvg = storyDiv.append('svg');
-    d3.json("/data/top200.json", function (error, data) {
+    d3.json("data/top200.json", function (error, data) {
             drawTopByWeekGraphKendrick(data, 14, 16, singleSvg);
     })
     
@@ -104,7 +104,7 @@ function loadStoryDna() {
         .classed('ken-story-text', true);
 
     let releaseSvg = storyDiv.append('svg');
-    d3.json("/data/top200.json", function (error, data) {
+    d3.json("data/top200.json", function (error, data) {
             drawTopByWeekGraphKendrick(data, 16, 23, releaseSvg);
     })
     
@@ -227,7 +227,7 @@ function drawTopByWeekGraphKendrick(data, start, end, svg) {
 
     images
         .attr("href", function (d) {
-            return "../data/images/" + d.id
+            return "data/images/" + d.id
         })
         .attr("class", function (d) {
             return d.id
