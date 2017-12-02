@@ -15,7 +15,7 @@ function drawDimensions(data, limit) {
     let ydim = document.getElementById('ydim').value;
 
 
-    let buffer = oneEm * 4//50;
+    let buffer = oneEm * 4
     let width = contentWidth;
     let height = Math.min(contentWidth*(2.0/3.0), window.innerHeight - 2 * oneEm)
 
@@ -72,18 +72,21 @@ function drawDimensions(data, limit) {
     circles = circles
         .enter().append("image").merge(circles);
 
+    let imgsize = .75 * buffer
+
     circles
         .style('opacity', 0)
         .attr("id", d => d.id)
         .attr("href", d => encodeURI("data/images/" + String(d.id)))//d.album.images[1].url
+        .attr('ydim', d => d.features[ydim])
         .attr("x", function (d) {
             return xscale(d.features[xdim])
         })
         .attr("y", function (d) {
-            return yscale(d.features[ydim])
+            return yscale(d.features[ydim]) - imgsize
         })
-        .attr("width", .75 * buffer)
-        .attr("height", .75 * buffer)
+        .attr("width", imgsize)
+        .attr("height", imgsize)
         .transition()
         .duration(1000)
         .style('opacity', 1);
@@ -122,14 +125,14 @@ function updateDimensionCharts() {
 
 function makeDimensionSelectors() {
     let values = 
-        ['acousticness', 'danceability', 'energy', 'instrumentalness', 'liveness', 'popularity', 'speechiness', 'valence']
+        ['acousticness', 'danceability', 'energy', 'liveness', 'speechiness', 'valence']
     let dim = d3.select('#chart-dim')
     dim.append('h4').text('Dimensions')
     dim = dim.selectAll('div').data(['x', 'y']).enter().append('div')
     dim.append('h5').text(d => d.toUpperCase() + ': ')
     .append('select')
         .attr('id', d => d + 'dim')
-        .attr('onchange', 'updateCharts()')
+        .attr('onchange', 'updateDimensionCharts()')
             .selectAll('option')
             .data(values)
             .enter()
@@ -153,6 +156,7 @@ function loadDimensions() {
             .attr('id', "searchentry")
 
     addDiv('canvas', true)
+    addDiv('info')
 
     let dates = ["2016-12-23", "2016-12-30", "2017-01-06", "2017-01-13", "2017-01-20", "2017-01-27", "2017-02-03", "2017-02-10", "2017-02-17", "2017-02-24", "2017-03-03", "2017-03-10", "2017-03-17", "2017-03-24", "2017-03-31", "2017-04-07", "2017-04-14", "2017-04-21", "2017-04-28", "2017-05-05", "2017-05-12", "2017-05-19", "2017-05-26", "2017-06-02", "2017-06-09", "2017-06-16", "2017-06-23", "2017-07-07", "2017-07-14", "2017-07-21", "2017-07-28", "2017-08-11", "2017-08-18", "2017-08-25", "2017-09-01", "2017-09-08", "2017-09-22", "2017-09-29", "2017-10-06", "2017-10-13", "2017-10-20", "2017-10-27", "2017-11-03", "2017-11-10"]
 
@@ -171,6 +175,10 @@ function loadDimensions() {
     }
 
     makeDimensionSelectors()
+
+    d3.text("info.html", function(text){
+        d3.select("#info").html(text)
+    })
 
     updateDimensionCharts()
 }

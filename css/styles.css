@@ -23,7 +23,7 @@ body {
 }
 
 #info {
-    margin: 4em 1em;
+    margin: 1em;
 }
 
 text {
@@ -36,6 +36,24 @@ line, path {
 
 #chart-circles svg, #chart-albums svg {
     background: #4F4F4F;
+}
+
+.miniChart rect, .starChart rect {
+    fill: #222222;
+}
+
+.miniChart text {
+    text-anchor: start;
+}
+
+.miniChart path {
+    stroke: #1ED760;
+    stroke-width: 2;
+    fill: none;
+}
+
+.miniChart .domain, .miniChart .tick line {
+    stroke: none;
 }
 
 /* Star Chart Styles */
