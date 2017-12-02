@@ -372,11 +372,14 @@ function drawDimensionsKendrick(data, limit) {
         let ydim = "danceability";
     
     
-        let buffer = 50;
+        let buffer = oneEm * 3
         let width = contentWidth * 0.8;
         let height = (contentWidth*(2.0/3.0)) * 0.8;
     
-        chart.attr("height", height).attr("width", width)
+        chart
+            .attr("height", height)
+            .attr("width", width)
+            .attr('transform', 'translate(' + contentWidth * .1 + ', 0)')
     
     
     
