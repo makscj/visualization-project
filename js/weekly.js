@@ -98,7 +98,7 @@ function drawTopByWeekGraph(data, limit) {
             images.style("opacity", .5)
         })
         .on("click", function (d) {
-            console.log(d)
+            // console.log(d)
             loadSpotifyPlayer(d.id)
         })
 }

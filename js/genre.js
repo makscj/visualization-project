@@ -35,7 +35,7 @@ function drawByGenre(data, toggled) {
 
 
     data = data.filter(x => x.song.name != "")
-    console.log(data)
+    // console.log(data)
 
     let totalSongs = new Set(data)
 
@@ -208,7 +208,7 @@ function drawSongsWithGenre(data, limit) {
 
         .on("mouseout", resetCharts)
         .on("click", function (d) {
-            console.log(d)
+            // console.log(d)
             loadSpotifyPlayer(d.id, true)
         })
 

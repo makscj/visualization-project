@@ -94,7 +94,7 @@ function drawDimensions(data, limit) {
 
     circles
         .on("mouseover", function (d) {
-            console.log(d.name + "\n" + d.artists[0].name)
+            // console.log(d.name + "\n" + d.artists[0].name)
             d3.select(this)
                 .attr("width", 1.5 * buffer)
                 .attr("height", 1.5 * buffer)
@@ -104,7 +104,7 @@ function drawDimensions(data, limit) {
                 .attr("height", .75 * buffer)
         })
         .on("click", function (d) {
-            console.log(d)
+            // console.log(d)
             loadSpotifyPlayer(d.id)
         })
 

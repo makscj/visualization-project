@@ -158,10 +158,10 @@ function loadStoryDna() {
     storyDiv.append('svg')
         .attr("id", "ken-dim-plot");
     d3.json("data/top200.json", function (error, data) {
-        console.log(data[0].album.id);
+        // console.log(data[0].album.id);
         data = data.filter(d => d.album.id == "4eLPsYPBmXABThSJ821sqY");
         data = data.filter(d => d.date == "2017-04-14");
-        console.log(data);
+        // console.log(data);
         drawDimensionsKendrick(data, 10);
     });
     
