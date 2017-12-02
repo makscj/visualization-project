@@ -15,7 +15,7 @@ function drawDimensions(data, limit) {
     let ydim = document.getElementById('ydim').value;
 
 
-    let buffer = oneEm * 4//50;
+    let buffer = oneEm * 4
     let width = contentWidth;
     let height = Math.min(contentWidth*(2.0/3.0), window.innerHeight - 2 * oneEm)
 
@@ -122,14 +122,14 @@ function updateDimensionCharts() {
 
 function makeDimensionSelectors() {
     let values = 
-        ['acousticness', 'danceability', 'energy', 'instrumentalness', 'liveness', 'popularity', 'speechiness', 'valence']
+        ['acousticness', 'danceability', 'energy', 'liveness', 'speechiness', 'valence']
     let dim = d3.select('#chart-dim')
     dim.append('h4').text('Dimensions')
     dim = dim.selectAll('div').data(['x', 'y']).enter().append('div')
     dim.append('h5').text(d => d.toUpperCase() + ': ')
     .append('select')
         .attr('id', d => d + 'dim')
-        .attr('onchange', 'updateCharts()')
+        .attr('onchange', 'updateDimensionCharts()')
             .selectAll('option')
             .data(values)
             .enter()
