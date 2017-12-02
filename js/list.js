@@ -45,9 +45,13 @@ function drawList(data, limit) {
     let i = 0
     let rows = tbody.selectAll("svg>g>g")
         .data(data)
-        .enter()
-        .append("g")
-        .attr('transform', d => 'translate(0, ' + (i++ * (hei + marg)) + ')')
+       
+
+    rows.exit().remove()
+
+    rows =  rows.enter().append("g").merge(rows)
+        
+    rows.attr('transform', d => 'translate(0, ' + (i++ * (hei + marg)) + ')')
         .attr('width', svgWidth)
         .on('mouseover', function() {
             d3.select(this).select('.list-rect')
@@ -108,15 +112,8 @@ function drawList(data, limit) {
             loadSpotifyPlayer(d.id)
         })
 
-    let iiii = 0
 
-    /*
-        Can fit horizontalBoxes boxes in a frame
-        Make text width be 4*hei + oneEm/2
-        Image is 1 hei
-        Star plot is 1 hei at the end
-        The remainder, or horizontalBoxes - 6, is the size we can do for graph
-    */
+
 
 
     let miniPlotX = d3.scaleLinear()
