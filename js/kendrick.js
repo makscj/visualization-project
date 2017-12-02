@@ -341,7 +341,7 @@ function drawSongsWithGenreKendrick(data, start, end) {
 
     images
         .attr("href", function (d) {
-            return "/data/images/" + d.id
+            return "data/images/" + d.id
         })
         .attr("x", function (d) {
             return xscale(d.position);
@@ -432,7 +432,7 @@ function drawDimensionsKendrick(data, limit) {
         circles
             .style("opacity", 0)
             .attr("id", d => d.id)
-            .attr("href", d => encodeURI("/data/images/" + String(d.id)))
+            .attr("href", d => encodeURI("data/images/" + String(d.id)))
             .attr("x", function (d) {
                 return xscale(d.features[xdim])
             })
