@@ -181,7 +181,7 @@ function makeData(data, limit) {
 
     let sortFunctions = {
                 "Artist" : (x,y) => compareStrings(x.artists.artists[0].name,y.artists.artists[0].name, sortDirection),
-                "Song" : (x,y) => compareStrings(x.song.name,y.artists.artists[0].name, sortDirection),
+                "Song" : (x,y) => compareStrings(x.song.name,y.song.name, sortDirection),
                 "Streams" : (x,y) => sortDirection*(d3.sum(y.chart, z => +z.streams) - d3.sum(x.chart, z => +z.streams)),
                 "Position" : (x,y) => sortDirection*(d3.min(x.chart, z => +z.position) - d3.min(y.chart, z => +z.position)),
                 "Weeks" : (x,y) => sortDirection*(y.chart.length - x.chart.length),
@@ -197,7 +197,8 @@ function makeData(data, limit) {
 
 function updateSongList() {
     d3.json("data/songs.json", function (error, data) {
-        drawList(data, 25)
+        let limit = document.getElementById('limitSelect').value;
+        drawList(data, limit)
 
     })
 }
@@ -231,8 +232,21 @@ function loadList() {
         .append('option')
         .attr('value', (d, i) => i == 0 ? 1 : -1)
         .text(d => d)
-    div.selectAll('select')
-        .on('change', updateSongList)
+    
+
+    let limit = d3.select('#weekly-limit')
+    limit.append('h4').text('# per week: ')
+            .append('select')
+            .attr('id', 'limitSelect')
+            .on('change', updateSongList)
+            .selectAll('option').data([10, 25, 50, 75, 100, 200]).enter()
+            .append('option')
+            .attr('value', d => d)
+            .text(d => d)
+            
+
+        div.selectAll('select')
+            .on('change', updateSongList)
 
 
     updateSongList()
