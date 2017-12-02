@@ -38,6 +38,24 @@ line, path {
     background: #4F4F4F;
 }
 
+.miniChart rect, .starChart rect {
+    fill: #222222;
+}
+
+.miniChart text {
+    text-anchor: start;
+}
+
+.miniChart path {
+    stroke: #1ED760;
+    stroke-width: 2;
+    fill: none;
+}
+
+.miniChart .domain, .miniChart .tick line {
+    stroke: none;
+}
+
 /* Star Chart Styles */
 .star-axis {
     stroke-width: 1px;
