@@ -135,7 +135,7 @@ function drawSongsWithGenre(data, limit) {
             let t = 'translate(' + x + ', ' + y + ')'
             return t
         })
-        .attr('class', d => d.genre.replace(/ /g, '-') + ' box')
+        .attr('class', d => d.genre.replace(/ /g, '-') + ' legendbox')
         .style('opacity', opacity.default)
         .on("mouseover", d => d3.selectAll("." + d.genre.replace(/ /g, "-")).style("opacity", opacity.hover))
         .on("mouseout", resetCharts)
@@ -201,7 +201,7 @@ function drawSongsWithGenre(data, limit) {
                 //     return opacity.rap
                 return opacity.default
             })
-            let joinedGenres = fixGenres(d.genres).map(x => ".genre." + x + ",.bar." + x + ",.ribbon." + x).join(",")
+            let joinedGenres = fixGenres(d.genres).map(x => ".genre." + x + ",.bar." + x + ",.ribbon." + x + ",.legendbox." + x).join(",")
             d3.selectAll(joinedGenres).style("opacity", opacity.hover)
 
         })
@@ -404,18 +404,6 @@ function drawChordDiagram(genreList) {
         .attr("transform", function (d) { return "rotate(" + (d.angle * 180 / Math.PI - 90) + ") translate(" + outerRadius + ",0)"; });
 
 
-    /*
-    groupTick
-        .append("text")
-        .attr("x", 8)
-        .attr("dy", ".35em")
-        .attr("transform", function (d) { return d.angle > Math.PI ? "rotate(180) translate(-16)" : null; })
-        .style("text-anchor", function (d) { return d.angle > Math.PI ? "end" : null; })
-        .text(function (d) {
-            return topGenres[d.index];
-        });
-        */
-
     //Ribbon between genres
     g.append("g")
         .selectAll("path")
@@ -436,6 +424,7 @@ function drawChordDiagram(genreList) {
             d3.selectAll("." + trgGenre + "." + srcGenre).style("opacity", opacity.hover)
             d3.selectAll(".bar." + trgGenre + ",.bar." + srcGenre).style("opacity", opacity.hover)
             d3.selectAll(".genre." + trgGenre + ",.genre." + srcGenre).style("opacity", opacity.hover)
+            d3.selectAll(".legendbox." + trgGenre + ",.legendbox." + srcGenre).style("opacity", opacity.hover)
 
         })
         .on("mouseout", resetCharts)
@@ -459,7 +448,7 @@ function updateGenreCharts(toggled) {
 
 
 function resetCharts() {
-    d3.selectAll(".ribbons,.box,.genre,.bar").style("opacity", opacity.default)
+    d3.selectAll(".ribbons,.box,.genre,.bar,.legendbox").style("opacity", opacity.default)
 }
 
 function loadGenre() {
