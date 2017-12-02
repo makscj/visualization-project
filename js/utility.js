@@ -56,15 +56,9 @@ function scrollToTopOfElement(selector) {
 
 function clearPage () {
     d3.select('#content').selectAll('*').remove()
-    d3.select('#spotify-player').selectAll('*').remove()
     d3.select('#view-select ul ul').remove()
     d3.select('#sidebar .selected').classed('selected', false)
-    d3.selectAll('#chart-dim *').remove()
-    d3.selectAll('#weekly-limit *').remove()
-    d3.selectAll('#toggle *').remove()
-    d3.selectAll('#date-select *').remove()
-    d3.selectAll('#side-chart *').remove()
-    d3.selectAll('#song-stats *').remove();
+    d3.selectAll('#sidebar div:not(:first-of-type) *').remove()
 }
 
 function loadSpotifyPlayer(id, isCompact = false) {
@@ -110,7 +104,8 @@ function displaySongStatsInSidebar(e, v, d) {
 
     let statsSvg = d3.select("#song-stats")
         .append('svg')
-        .attr("width", bounds.width);
+        .attr("width", bounds.width)
+        .attr('height', '6em')
 
     // Energy
     let label = statsSvg.append('g')

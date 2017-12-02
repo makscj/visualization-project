@@ -4,9 +4,10 @@ function drawList(data, limit) {
 
     data = data.filter(x => x.chart.some(x => +x.position <= limit)).filter(x => x.song.name != "")
 
-    console.log(data);
 
-    let sortDirection = 1;
+    let selectors = d3.select('#sort-selection')
+    let sort = selectors.select('select:first-of-type').node().value
+    let sortDirection = selectors.select('select:last-of-type').node().value
 
     let sortFunctions = {
         "Artist" : (x,y) => compareStrings(x.artists.artists[0].name,y.artists.artists[0].name, sortDirection),
@@ -19,7 +20,8 @@ function drawList(data, limit) {
         "Energy" : (x,y) => sortDirection*(y.song.features.energy - x.song.features.energy)
     }
 
-    data.sort(sortFunctions["Streams"])
+
+    data.sort(sortFunctions[sort])
 
 
 
@@ -237,6 +239,25 @@ function loadList() {
             .attr('id', "searchentry")
 
     addDiv('canvas', true)
+
+    let sorts = ["Artist", "Danceability", "Energy", "Position", "Song", "Streams", "Valence", "Weeks"]
+    let direction = ['Descending', 'Ascending']
+    let div = d3.select('#sort-selection')
+    div.append('h4').text('Sort')
+    div.append('select')
+        .selectAll('option').data(sorts).enter()
+        .append('option')
+        .attr('value', d => d)
+        .text(d => d)
+        .filter(d => d == sorts[5])
+        .property('selected', 'selected')
+    div.append('select')
+        .selectAll('option').data(direction).enter()
+        .append('option')
+        .attr('value', (d, i) => i == 0 ? 1 : -1)
+        .text(d => d)
+    div.selectAll('select')
+        .on('change', updateSongList)
 
 
     updateSongList()
