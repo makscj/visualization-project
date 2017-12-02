@@ -94,13 +94,10 @@ function drawByGenre(data, toggled) {
 
 function drawSongsWithGenre(data, limit) {
 
-
-
     let isChecked = document.getElementById('displayImage').checked;
 
     let shape = isChecked ? "image" : "rect"
     let oldShape = isChecked ? "rect" : "image"
-
 
 
     let dates = Array.from(new Set(data.map(x => x.date)))
@@ -108,11 +105,49 @@ function drawSongsWithGenre(data, limit) {
     let svg = d3.select("#canvas svg")
     let width = contentWidth
     let imgsize = Math.ceil(width / (limit + 1)) - 1
-    let height = (imgsize + 1) * numberOfWeeks
+    let legendRectSize = oneEm
+    let legendGSize = oneEm * 8
+    let legendHeight = legendRectSize * 2 + oneEm
+    let legendWidth = legendGSize * 5
+    let height = (imgsize + 1) * numberOfWeeks + legendHeight
 
 
     svg.attr("height", height)
         .attr("width", width)
+
+    // legend START
+    let legendData = []
+    let start = 0
+    for(let s in genreColors)
+        legendData.push({genre: s, color: genreColors[s]})
+    let legend = svg.append('g')
+        .attr('transform', 'translate(' + ((width - legendWidth) / 2) + ', 0)')
+        .selectAll('g')
+        .data(legendData).enter()
+        .append('g')
+        .attr('transform', function(d, i) {
+            let x = start
+            let y = 0
+            if(i % 2 == 1) {
+                y = legendHeight - legendRectSize - oneEm / 2
+                start += legendGSize
+            }
+            let t = 'translate(' + x + ', ' + y + ')'
+            return t
+        })
+        .attr('class', d => d.genre.replace(/ /g, '-') + ' box')
+        .style('opacity', opacity.default)
+        .on("mouseover", d => d3.selectAll("." + d.genre.replace(/ /g, "-")).style("opacity", opacity.hover))
+        .on("mouseout", resetCharts)
+    legend.append('rect')
+        .attr('width', legendRectSize)
+        .attr('height', legendRectSize)
+        .attr('fill', d => '#' + d.color)
+    legend.append('text')
+        .text(d => d.genre)
+        .attr('transform', 'translate(' + (oneEm * 1.25) + ', ' + (legendRectSize - oneEm / 4) + ')')
+    // legend END
+
 
 
     let xscale = d3.scaleLinear()
@@ -120,19 +155,14 @@ function drawSongsWithGenre(data, limit) {
         .range([0, width - imgsize])
     let yscale = d3.scaleLinear()
         .domain([0, dates.length])
-        .range([0, height])
+        .range([legendHeight, height])
 
-    let images = svg.selectAll(oldShape).data([])
+    let images = svg.selectAll('svg>' + oldShape).data([])
     images.exit().remove()
 
-
-
-    images = svg.selectAll(shape).data(data);
+    images = svg.selectAll('svg>' + shape).data(data);
     images.exit().remove()
     images = images.enter().append(shape).merge(images)
-
-
-
 
     images
         .style("fill", function (d) {
@@ -313,8 +343,8 @@ function drawChordDiagram(genreList) {
         .attr("width", width)
         .attr("height", height)
 
-    let outerRadius = Math.min(width, height) * 0.5 - 2 * oneEm
-    let innerRadius = outerRadius - 2 * oneEm
+    let outerRadius = Math.min(width, height) * 0.5 
+    let innerRadius = outerRadius - 1.5 * oneEm
 
     var chord = d3.chord()
         .padAngle(0.05)
@@ -374,6 +404,7 @@ function drawChordDiagram(genreList) {
         .attr("transform", function (d) { return "rotate(" + (d.angle * 180 / Math.PI - 90) + ") translate(" + outerRadius + ",0)"; });
 
 
+    /*
     groupTick
         .append("text")
         .attr("x", 8)
@@ -383,6 +414,7 @@ function drawChordDiagram(genreList) {
         .text(function (d) {
             return topGenres[d.index];
         });
+        */
 
     //Ribbon between genres
     g.append("g")
