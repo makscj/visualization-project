@@ -18,10 +18,6 @@
     padding: 0;
 }
 
-#sidebar li {
-    cursor: pointer;
-}
-
 #sidebar li, #sidebar li>a {
     padding: .25em;
 }
@@ -41,6 +37,7 @@
 
 #sidebar a {
     color: white;
+    cursor: pointer;
 }
 
 #sidebar h5, #sidebar select {
