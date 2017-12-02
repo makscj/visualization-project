@@ -72,18 +72,21 @@ function drawDimensions(data, limit) {
     circles = circles
         .enter().append("image").merge(circles);
 
+    let imgsize = .75 * buffer
+
     circles
         .style('opacity', 0)
         .attr("id", d => d.id)
         .attr("href", d => encodeURI("data/images/" + String(d.id)))//d.album.images[1].url
+        .attr('ydim', d => d.features[ydim])
         .attr("x", function (d) {
             return xscale(d.features[xdim])
         })
         .attr("y", function (d) {
-            return yscale(d.features[ydim])
+            return yscale(d.features[ydim]) - imgsize
         })
-        .attr("width", .75 * buffer)
-        .attr("height", .75 * buffer)
+        .attr("width", imgsize)
+        .attr("height", imgsize)
         .transition()
         .duration(1000)
         .style('opacity', 1);
