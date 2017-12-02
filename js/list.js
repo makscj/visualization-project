@@ -235,7 +235,7 @@ function loadList() {
     
 
     let limit = d3.select('#weekly-limit')
-    limit.append('h4').text('# per week: ')
+    limit.append('h4').text('Peak position reached: ')
             .append('select')
             .attr('id', 'limitSelect')
             .on('change', updateSongList)
