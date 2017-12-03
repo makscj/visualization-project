@@ -7,6 +7,6 @@ Jackson Stafford
 
 Website: https://makscj.github.io/visualization-project/
 
-Screencast: <URL>
+Screencast: https://goo.gl/kmhNPE
 
 Process book: https://github.com/makscj/visualization-project/blob/master/process_book.pdf
