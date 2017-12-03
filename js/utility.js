@@ -58,7 +58,7 @@ function clearPage () {
     d3.select('#content').selectAll('*').remove()
     d3.select('#view-select ul ul').remove()
     d3.select('#sidebar .selected').classed('selected', false)
-    d3.selectAll('#sidebar div:not(:first-of-type) *').remove()
+    d3.selectAll('#sidebar div:not(#about):not(:first-of-type) *').remove()
 }
 
 function loadSpotifyPlayer(id, isCompact = false) {
@@ -215,6 +215,20 @@ function compareStrings(str1, str2, d = 1){
       }
       // strings must be equal
       return 0;
+}
+
+function loadAbout() {
+    clearPage()
+    let div = addDiv('about-page')
+        .style('text-align', 'center')
+    div.append('h2')
+        .text('Created by')
+    div.selectAll('div').data([{name: 'Maks Cegieslski-Johnson', git: 'makscj'},
+            {name: 'Jake Pitkin', git: 'jspitkin'},
+            {name: 'Jackson Stafford', git: 'jackmstafford'}])
+        .enter().append('div').append('a')
+        .text(d => d.name)
+        .attr('href', d => 'https://www.github.com/' + d.git)
 }
 
 loadSidebar()

@@ -63,7 +63,6 @@ function drawList(data, limit) {
         //.attr('y', -0 * 1.5)
     // background rect END
 
-    // TODO handle too long songs and artists
     let cells = rows.selectAll("g")
         .data(function (row) {
             return [
@@ -83,9 +82,20 @@ function drawList(data, limit) {
     // row text START
     cent.filter(d => d.type != 'starChart' && d.type != "img" && d.type != "miniChart")
         .append("text")
-        .attr("width", oneEm * 10)
         .attr('class', d => d.type)
+        // both text calls necessary for getSubStringLength
         .text(d => d.value)
+        .text(function(d) {
+            let max = 13
+            let t = d.value
+            let i = t.length
+            if(this.getSubStringLength(0, i) < oneEm * max)
+                return t
+            max -= 2
+            while(this.getSubStringLength(0, i) > oneEm * max)
+                i--
+            return t.substr(0, i) + '...'
+        })
         .filter(d => d.translate != null)
         .attr('transform', d => 'translate(' + d.translate[0] + ', ' + d.translate[1] + ')')
     // row text END
