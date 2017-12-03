@@ -43,3 +43,15 @@
 #sidebar h5, #sidebar select {
     margin-left: 1em;
 }
+
+#sidebar #about {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    padding-left: 7.5em;
+    padding-bottom: .5em;
+}
+
+#sidebar #about a {
+    padding: .25em
+}

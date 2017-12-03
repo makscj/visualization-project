@@ -94,3 +94,16 @@ div#song-stats {
 .hover-cursor {
     cursor: pointer;
 }
+
+#about-page div {
+    display: block;
+    padding: .5em;
+}
+
+#about-page a {
+    color: white;
+    cursor: pointer;
+    font-size: large;
+    padding: .5em;
+    text-decoration: underline;
+}
