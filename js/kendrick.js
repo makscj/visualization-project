@@ -31,7 +31,7 @@ function loadStoryBlood() {
         .classed('ken-story', true);
     
     storyDiv.append('p')
-        .text("On April 14th 2017 Kendrick Lamar released his fourth studio album Damn.")
+        .text("On April 14th 2017 Kendrick Lamar released his fourth studio album DAMN.")
         .style('opacity', 0)
         .attr('id', 'ken-1-1')
         .classed('ken-story-text', true);
@@ -82,7 +82,7 @@ function loadStoryHumble() {
         .classed('ken-story', true);
     
     storyDiv.append('p')
-        .text("Kendrick released his single HUMBLE. and it helt the top spot both weeks.")
+        .text("Kendrick released his single HUMBLE. and it held the top spot both weeks.")
         .style('opacity', 0)
         .attr('id', 'ken-2-1')
         .classed('ken-story-text', true);
@@ -180,7 +180,7 @@ function loadStoryLove() {
         .classed('ken-story', true);
 
     storyDiv.append('p')
-        .text("The album received heavy praise arcoss the internet.")
+        .text("The album received heavy praise across the internet.")
         .style('opacity', 0)
         .attr('id', 'ken-5-1')
         .classed('ken-story-text', true);
@@ -199,7 +199,7 @@ function loadStoryLove() {
         .text("Kendrick Lamar is nominated for seven Grammys this year.");
     storyDiv.append('a')
         .attr('href', "https://pitchfork.com/thepitch/7-takeaways-from-the-2018-grammy-nominations/")
-        .text("Story: 2018 Grammy Preductions by Pitchfork")
+        .text("Story: 2018 Grammy Predictions by Pitchfork")
         .attr("target", "_blank")
         .attr("id", "ken-5-3");
 
